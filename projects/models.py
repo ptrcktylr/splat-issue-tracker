@@ -5,7 +5,7 @@ class Project(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
 
-    assigned_users = models.ManyToManyField(User, related_name='assigned_projects')
+    assigned_users = models.ManyToManyField(User, related_name='assigned_projects', blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
