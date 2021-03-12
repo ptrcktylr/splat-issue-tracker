@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+def ticket(request):
+    return render(request, 'tickets/ticket.html')
+
+def tickets(request):
+    return render(request, 'tickets/tickets.html')
