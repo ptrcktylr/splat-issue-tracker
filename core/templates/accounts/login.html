@@ -32,9 +32,8 @@
                   <p>{{ msg | safe }}</p>
                 {% else %}
                   <p>
-                    Add your credentials
-                    <br />
-                    OR <a href={% url 'register' %} >create your own user</a>
+                    <h2>Sign In</h2>
+                    or <a href={% url 'register' %} >create an account</a>
                   </p>
                 {% endif %}  
 
