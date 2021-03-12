@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.deletion import CASCADE, PROTECT
 from django.contrib.auth.models import User
 from projects.models import Project
+from simple_history.models import HistoricalRecords
 
 PRIORITY_CHOICES = (('critical', 'Critical'),
                     ('major', 'Major'),
@@ -41,6 +42,8 @@ class Ticket(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    history = HistoricalRecords()
 
     def __str__(self):
         return self.title
