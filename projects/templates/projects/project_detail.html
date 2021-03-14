@@ -1,0 +1,174 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} {{ object.name }} {% endblock title %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+    </div>
+
+    <div class="container-fluid mt--7">
+
+        <div class="row">
+            <div class="col-xl mb-5 mb-xl-0">
+                <div class="card shadow">
+                  <div class="card-header border-0">
+                    <div class="row align-items-center">
+                      <div class="col">
+                        <h2 class="mb-0">{{ object.name }} Details</h2>
+                        <h6 class="text-uppercase text-muted ls-1 mt-2">
+                            <a href="/projects/">Back to My Projects</a> 
+                         </h6>
+                      </div>
+                      <div class="col text-right">
+                        <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="table-responsive">
+                    <table class="table align-items-center table">
+                      <!-- Table Headers -->
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col">
+                              Project Name
+                          </th>
+                          <th scope="col">
+                              Project Description
+                          </th>
+                        </tr>
+                      </thead>
+      
+                      <!-- Table Body -->
+                      <tbody class="list">
+                        <!-- Table Item -->
+                        <tr>
+                          <!-- Project Name & Image -->
+                          <th scope="row" class="name">
+                            <div class="media align-items-center">
+                              <a href="#" class="avatar rounded-circle mr-3">
+                                <img alt="Image placeholder" src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/angular.jpg">
+                              </a>
+                              <div class="media-body">
+                                <span class="mb-0 text-sm">{{ object.name }}</span>
+                              </div>
+                            </div>
+                          </th>
+                          <!-- Open Tickets -->
+                          <td class="open-tickets">
+                            {{ object.description }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-xl-5 mb-4">
+                <div class="card shadow">
+                  <div class="card-header border-0">
+                    <div class="row align-items-center">
+                      <div class="col text-center">
+                        <h6 class="text-uppercase text-muted ls-1 mb-1">Current users on this project</h6>
+                        <h3 class="mb-0">Assigned Personnel</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="table-responsive">
+                    <!-- Personnel table -->
+                    <table class="table align-items-center table-flush">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col">Username</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Role</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                        {% for assigned_user in object.assigned_users.all %}
+                          <th scope="row">
+                            {{ assigned_user.username }}
+                          </th>
+                          <td>
+                            {{ assigned_user.email }}
+                          </td>
+                          <td>
+                            Role (change this)
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+            </div>
+            <div class="col-xl-7 mb-4">
+                <div class="card shadow">
+                  <div class="card-header border-0">
+                    <div class="row align-items-center">
+                      <div class="col text-center">
+                        <h6 class="text-uppercase text-muted ls-1 mb-1">Tickets for this project</h6>
+                        <h3 class="mb-0">Project Tickets</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="table-responsive">
+                    <!-- Tickets table -->
+                    <table class="table align-items-center table-flush">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col">Title</th>
+                          <th scope="col">Submitter</th>
+                          <th scope="col">Developer</th>
+                          <th scope="col">Status</th>
+                          <th scope="col"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for ticket in object.tickets.all %}
+                        <tr>
+                            <th scope="row">
+                                <a href="#" class="text-body">{{ ticket.title }}</a>
+                            </th>
+                            <td>
+                                {{ ticket.submitted_by }}
+                            </td>
+                            <td>
+                                {{ ticket.assigned_to }}
+                            </td>
+                            <td>
+                                {{ ticket.status }}
+                            </td>
+                            <td class="text-right">
+                                <div class="dropdown">
+                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <i class="fas fa-ellipsis-v"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                        <a class="dropdown-item" href="/tickets/">More Details</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+      {% include "includes/footer.html" %}
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

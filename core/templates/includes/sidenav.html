@@ -90,37 +90,37 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-          <a class=" nav-link {% if 'index' in segment %} active {% endif %}" href="/"> <i class="ni ni-tv-2 text-primary"></i> Dashboard
+          <a class=" nav-link {% if request.path == '/' %} active {% endif %}" href="/"> <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="/role-managment/">
+            <a class="nav-link {% if 'role-managment' in request.path %} active {% endif %}" href="/role-managment/">
               <i class="fas fa-users-cog text-orange"></i> Manage User Roles
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if 'maps' in segment %} active {% endif %}" href="/project-managment/">
+            <a class="nav-link {% if 'project-managment' in request.path %} active {% endif %}" href="/project-managment/">
               <i class="fas fa-users text-purple"></i> Manage Project Users
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if 'tables' in segment %} active {% endif %}" href="/projects/">
+            <a class="nav-link {% if 'projects' in request.path %} active {% elif 'project/' in request.path %} active {% endif %}" href="/projects/">
               <i class="fas fa-project-diagram text-green"></i> My Projects
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if 'tables' in segment %} active {% endif %}" href="/tickets/">
+            <a class="nav-link {% if 'tickets' in request.path %} active {% elif 'ticket/' in request.path %} {% endif %}" href="/tickets/">
               <i class="fas fa-tasks text-info"></i> My Tickets
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if 'profile' in segment %} active {% endif %}" href="/profile/">
+            <a class="nav-link {% if 'profile' in request.path %} active {% endif %}" href="/profile/">
               <i class="ni ni-single-02 text-yellow"></i> User profile
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}">
-              <i class="ni ni-user-run text-red"></i> Logout
+              <i class="ni fas fa-sign-out-alt text-red"></i> Logout
             </a>
           </li>
         </ul>
