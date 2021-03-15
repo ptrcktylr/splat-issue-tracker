@@ -22,7 +22,7 @@
                          </h6>
                       </div>
                       <div class="col text-right">
-                        <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="{% url 'project-update' object.id %}" class="btn btn-sm btn-primary">Edit Project</a>
                       </div>
                     </div>
                   </div>
@@ -73,10 +73,13 @@
                 <div class="card shadow">
                   <div class="card-header border-0">
                     <div class="row align-items-center">
-                      <div class="col text-center">
-                        <h6 class="text-uppercase text-muted ls-1 mb-1">Current users on this project</h6>
-                        <h3 class="mb-0">Assigned Personnel</h3>
-                      </div>
+                        <div class="col">
+                            <h6 class="text-uppercase text-muted ls-1 mb-1">Current users on this project</h6>
+                            <h3 class="mb-0">Assigned Personnel</h3>
+                        </div>
+                        <div class="col text-right">
+                            <a href="#" class="btn btn-sm btn-primary">Edit Personnel</a>
+                        </div>
                     </div>
                   </div>
                   <div class="table-responsive">
@@ -112,10 +115,13 @@
                 <div class="card shadow">
                   <div class="card-header border-0">
                     <div class="row align-items-center">
-                      <div class="col text-center">
-                        <h6 class="text-uppercase text-muted ls-1 mb-1">Tickets for this project</h6>
-                        <h3 class="mb-0">Project Tickets</h3>
-                      </div>
+                        <div class="col">
+                            <h6 class="text-uppercase text-muted ls-1 mb-1">Tickets for this project</h6>
+                            <h3 class="mb-0">Project Tickets</h3>
+                        </div>
+                        <div class="col text-right">
+                            <a href="#" class="btn btn-sm btn-primary">Create Ticket</a>
+                        </div>
                     </div>
                   </div>
                   <div class="table-responsive">
@@ -159,6 +165,7 @@
                         {% endfor %}
                       </tbody>
                     </table>
+
                   </div>
                 </div>
             </div>

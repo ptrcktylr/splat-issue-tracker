@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic.edit import UpdateView
 from .models import Project
 from tickets.models import Ticket
 from django.contrib.auth.models import User
+from .forms import ProjectForm
 
 def dashboard(request):
     return render(request, 'projects/dashboard.html')
@@ -27,4 +29,17 @@ class ProjectDetailView(DetailView):
 
 class ProjectCreateView(CreateView):
     model = Project
-    fields = ['name', 'description', 'assigned_users']
+    form_class = ProjectForm
+
+    def form_valid(self, form):
+        form.save()
+        form.instance.assigned_users.add(self.request.user)
+        return super().form_valid(form)
+
+class ProjectUpdateView(UpdateView):
+    model = Project
+    form_class = ProjectForm
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)

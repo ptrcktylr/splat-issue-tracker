@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %} New Project {% endblock title %}
+{% block title %} {% if 'update' in request.path %} Update Project {% else %} New Project {% endif %} {% endblock title %}
 
 {% block content %}
 
@@ -15,8 +15,8 @@
                 <div class="card-header border-0">
                   <div class="row align-items-center">
                     <div class="col">
-                      <h3 class="mb-2">New Project</h3>
-                      <h6 class="text-uppercase text-muted ls-1 mb-0">You will be added as a Project Manager</h6>
+                      <h3 class="mb-2">{% if 'update' in request.path %} Update Project {% else %} New Project {% endif %}</h3>
+                      <h6 class="text-uppercase text-muted ls-1 mb-0">{% if 'update' not in request.path %} You will be added as a Project Manager {% else %} Updating existing project {% endif %}</h6>
                     </div>
                   </div>
                 </div>
@@ -24,39 +24,20 @@
                 <hr class="mb-3 mt-0">
                 
                 <div class="card-body">
-                    <form method="POST" class="needs-validation" novalidate>
-                        {% csrf_token %}
-                        <div class="d-flex row justify-content-center">
-                            <div class="col-md-10">
-                                <div class="form-group">
-                                    <label for="name" class="form-label">Project Name</label>
-                                    <input type="text" class="form-control" id="name" placeholder="My Project" required>
-                                    <div class="invalid-feedback">
-                                        Please enter a project name.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex row justify-content-center">
-                            <div class="col-md-10">
-                                <div class="form-group">
-                                    <label for="description" class="form-label">Description</label>
-                                    <textarea rows='3' class="form-control" id="description" placeholder="Project Description" required></textarea>
-                                    <div class="invalid-feedback">
-                                        Please add a description for the project.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex row justify-content-center">
-                            <div class="d-flex col-md-10 justify-content-end">
-                                <a href="/projects/" class="btn btn-danger" type="button">Cancel</a>
-                                <button class="btn btn-primary" type="submit">Create Project</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    <div class="form-group">
+                        <form class="d-flex flex-column justify-content-center" id="project_form" method="POST">
+                            {% csrf_token %}
+                            {{ form }}
 
+                            <div class="d-flex row justify-content-end mt-3 mr-3">
+                                <div class="d-flex">
+                                    <a href="{% if 'update' in request.path %} {% url 'project-detail' object.id %} {% else %} {% url 'projects' %} {% endif %}" class="btn btn-danger" type="button">Cancel</a>
+                                    <button class="btn btn-primary" type="submit">{% if 'update' in request.path %} Update Project {% else %} Create Project {% endif %}</button>
+                                </div>
+                            </div>
+                            
+                        </form>
+                    </div>
                 </div>
               </div>
             </div>
