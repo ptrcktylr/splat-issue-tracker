@@ -12,7 +12,10 @@ from django.contrib.auth.models import User
 from django.forms.utils import ErrorList
 from django.http import HttpResponse
 from .forms import LoginForm, SignUpForm
+from django.contrib.auth.decorators import login_required
+from .decorators import unauthenticated_user
 
+@unauthenticated_user
 def login_view(request):
     form = LoginForm(request.POST or None)
 
@@ -34,6 +37,7 @@ def login_view(request):
 
     return render(request, "accounts/login.html", {"form": form, "msg" : msg})
 
+@unauthenticated_user
 def register_user(request):
 
     msg     = None
@@ -58,3 +62,7 @@ def register_user(request):
         form = SignUpForm()
 
     return render(request, "accounts/register.html", {"form": form, "msg" : msg, "success" : success })
+
+@login_required(login_url='/login/')
+def profile_view(request):
+    return render(request, 'profile.html')

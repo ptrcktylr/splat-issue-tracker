@@ -1,5 +1,4 @@
 {% extends 'layouts/base.html' %}
-
 {% block title %} Dashboard {% endblock title %}
 
 {% block content %}
@@ -45,6 +44,7 @@
                 <!-- Table Body -->
                 <tbody class="list">
                   <!-- Table Item -->
+                  {% for project in projects %}
                   <tr>
                     <!-- Project Name & Image -->
                     <th scope="row" class="name">
@@ -53,13 +53,13 @@
                           <img alt="Image placeholder" src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/angular.jpg">
                         </a>
                         <div class="media-body">
-                          <span class="mb-0 text-sm">Project Name 1</span>
+                          <span class="mb-0 text-sm">{{ project.name }}</span>
                         </div>
                       </div>
                     </th>
                     <!-- Open Tickets -->
                     <td class="open-tickets">
-                      5
+                      {{ project.num_open_tickets }}
                     </td>
                     <!-- Project Managers -->
                     <td>
@@ -104,183 +104,7 @@
                       </div>
                     </td>
                   </tr>
-                  <tr>
-                    <!-- Project Name & Image -->
-                    <th scope="row" class="name">
-                      <div class="media align-items-center">
-                        <a href="#" class="avatar rounded-circle mr-3">
-                          <img alt="Image placeholder" src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/vue.jpg">
-                        </a>
-                        <div class="media-body">
-                          <span class="mb-0 text-sm">Project Name 2</span>
-                        </div>
-                      </div>
-                    </th>
-                    <!-- Open Tickets -->
-                    <td class="open-tickets">
-                      5
-                    </td>
-                    <!-- Project Managers -->
-                    <td>
-                      <div class="avatar-group">
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                      </div>
-                    </td>
-                    <!-- Assigned Developers -->
-                    <td>
-                      <div class="avatar-group">
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <!-- Project Name & Image -->
-                    <th scope="row" class="name">
-                      <div class="media align-items-center">
-                        <a href="#" class="avatar rounded-circle mr-3">
-                          <img alt="Image placeholder" src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/react.jpg">
-                        </a>
-                        <div class="media-body">
-                          <span class="mb-0 text-sm">Project Name 3</span>
-                        </div>
-                      </div>
-                    </th>
-                    <!-- Open Tickets -->
-                    <td class="open-tickets">
-                      5
-                    </td>
-                    <!-- Project Managers -->
-                    <td>
-                      <div class="avatar-group">
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                      </div>
-                    </td>
-                    <!-- Assigned Developers -->
-                    <td>
-                      <div class="avatar-group">
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <!-- Project Name & Image -->
-                    <th scope="row" class="name">
-                      <div class="media align-items-center">
-                        <a href="#" class="avatar rounded-circle mr-3">
-                          <img alt="Image placeholder" src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/bootstrap.jpg">
-                        </a>
-                        <div class="media-body">
-                          <span class="mb-0 text-sm">Project Name 4</span>
-                        </div>
-                      </div>
-                    </th>
-                    <!-- Open Tickets -->
-                    <td class="open-tickets">
-                      5
-                    </td>
-                    <!-- Project Managers -->
-                    <td>
-                      <div class="avatar-group">
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                      </div>
-                    </td>
-                    <!-- Assigned Developers -->
-                    <td>
-                      <div class="avatar-group">
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
+                  {% endfor %}
                 </tbody>
               </table>
             </div>
@@ -288,6 +112,7 @@
         </div>
       </div>
 
+      {% if user_tickets|length > 0 %}
       <div class="row mt-4">
         <div class="col-xl mb-5 mb-xl-0">
           <div class="card shadow">
@@ -295,6 +120,7 @@
               <div class="row align-items-center">
                 <div class="col">
                   <h3 class="mb-0">My Tickets</h3>
+                  <h6 class="text-uppercase text-muted ls-1 mt-1">Tickets assigned to you</h6>
                 </div>
               </div>
             </div>
@@ -310,317 +136,196 @@
                   </tr>
                 </thead>
                 <tbody>
+                  {% for ticket in user_tickets %}
                   <tr>
                     <th scope="row">
-                      Ticket 1
+                      {{ ticket.title }}
                     </th>
                     <td>
-                      Project Name 1
+                      {{ ticket.project }}
                     </td>
                     <td>
-                      Critical
+                      {{ ticket.status }}
                     </td>
                     <td>
-                      Bug
+                      {{ ticket.type }}
                     </td>
                   </tr>
-                  <tr>
-                    <th scope="row">
-                      Ticket 2
-                    </th>
-                    <td>
-                      Project Name 2
-                    </td>
-                    <td>
-                      Medium
-                    </td>
-                    <td>
-                      Bug
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Ticket 3
-                    </th>
-                    <td>
-                      Project Name 3
-                    </td>
-                    <td>
-                      Trivial
-                    </td>
-                    <td>
-                      Feature Request
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Ticket 4
-                    </th>
-                    <td>
-                      Project Name 4
-                    </td>
-                    <td>
-                      Minor
-                    </td>
-                    <td>
-                      Process
-                    </td>
-                  </tr>
+                  {% endfor %}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
       </div>
+      {% endif %}
 
       <div class="row mt-4">
-        <div class="col-xl-3 mb-4">
-          <div class="card shadow">
-            <div class="card-header border-0">
+        <div class="col-xl mb-5 mb-xl-0">
+          <div class="card bg-gradient-default shadow">
+            <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
-                  <h3 class="mb-0">Ticket Priorities</h3>
+                  <h2 class="text-white mb-0">Ticket Totals</h2>
+                  <h6 class="text-uppercase text-light ls-1 mt-1">Hover or tap for details</h6>
                 </div>
               </div>
             </div>
-            <div class="table-responsive">
-              <!-- Projects table -->
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">Priority</th>
-                    <th scope="col">Tickets</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">
-                      Critical
-                    </th>
-                    <td>
-                      4
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Major
-                    </th>
-                    <td>
-                      2
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Medium
-                    </th>
-                    <td>
-                      6
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Minor
-                    </th>
-                    <td>
-                      3
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Trivial
-                    </th>
-                    <td>
-                      1
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-5 mb-4">
-          <div class="card shadow">
-            <div class="card-header border-0">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h3 class="mb-0">Ticket Statuses</h3>
+            
+            <div class="row mt-4 mr-4 ml-4">
+              <div class="col-xl-4 mb-4">
+                <div class="card shadow">
+                  <div class="card-header border-0 rounded">
+                    <div class="row">
+                      <div class="col">
+                        <h3 class="mb-0 text-center">Ticket Priorities</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <hr class="m-0">
+                  
+                  <div class="card-body">
+                    <canvas id="priorities_chart" width="400" height="400"></canvas>
+                  </div>
+                  
+                </div>
+              </div>
+              <div class="col-xl-4 mb-4">
+                <div class="card shadow">
+                  <div class="card-header border-0 rounded">
+                    <div class="row">
+                      <div class="col">
+                        <h3 class="mb-0 text-center">Ticket Statuses</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <hr class="m-0">
+                  <div class="card-body">
+                    <canvas id="statuses_chart" width="400" height="400"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4 mb-4">
+                <div class="card shadow">
+                  <div class="card-header border-0 rounded">
+                    <div class="row align-items-center">
+                      <div class="col">
+                        <h3 class="mb-0 text-center">Ticket Types</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <hr class="m-0">
+                  <div class="card-body">
+                    <canvas id="types_chart" width="400" height="400"></canvas>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="table-responsive">
-              <!-- Projects table -->
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">Status</th>
-                    <th scope="col">Tickets</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">
-                      New
-                    </th>
-                    <td>
-                      4
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Assigned
-                    </th>
-                    <td>
-                      2
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Accepted
-                    </th>
-                    <td>
-                      6
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Fixed
-                    </th>
-                    <td>
-                      3
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Fixed (Verified)
-                    </th>
-                    <td>
-                      1
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Won't Fix (Not Reproducible)
-                    </th>
-                    <td>
-                      1
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Won't Fix (Intended Behavior)
-                    </th>
-                    <td>
-                      1
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Won't Fix (Obsolete)
-                    </th>
-                    <td>
-                      1
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Won't Fix (Infeasible)
-                    </th>
-                    <td>
-                      1
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Duplicate
-                    </th>
-                    <td>
-                      0
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+
           </div>
         </div>
-        <div class="col-xl-4 mb-4">
-          <div class="card shadow">
-            <div class="card-header border-0">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h3 class="mb-0">Ticket Types</h3>
-                </div>
-              </div>
-            </div>
-            <div class="table-responsive">
-              <!-- Projects table -->
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">Type</th>
-                    <th scope="col">Tickets</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">
-                      Bug
-                    </th>
-                    <td>
-                      4
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Feature Request
-                    </th>
-                    <td>
-                      2
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Customer Issue
-                    </th>
-                    <td>
-                      6
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Internal Cleanup
-                    </th>
-                    <td>
-                      3
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Process
-                    </th>
-                    <td>
-                      1
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Vulnerability
-                    </th>
-                    <td>
-                      2
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        
       </div>
 
-      {% include "includes/footer.html" %}
+      <div class="mb-4"></div>
 
     </div>
+    <script>
+      // Priorities Chart
+      var ctx = document.getElementById('priorities_chart').getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+              data: ['{{Ticket.num_critical}}', '{{Ticket.num_major}}', '{{Ticket.num_medium}}', '{{Ticket.num_minor}}', '{{Ticket.num_trivial}}'],
+              backgroundColor: [
+              '#d7191c',
+              '#fdae61',
+              '#ffffbf',
+              '#a6d96a',
+              '#1a9641',
+              ]
+          }],
+          labels: ['Critical', 'Major', 'Medium', 'Minor', 'Trivial'],
+        },
+        options: {
+          legend: {
+            display: false,
+          }
+        }
+      });
+      
+      // Statuses Chart
+      var ctx = document.getElementById('statuses_chart').getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['New', 'Assigned', 'Accepted', 'Fixed', 'Fixed (Verified)', "Won't Fix (Not Reproducible)", "Won't Fix (Intended Behavior)", "Won't Fix (Obsolete)", "Won't Fix (Infeasible)", "Duplicate"],
+          datasets: [{
+              label: '# of Tickets',
+              data: ['{{Ticket.num_new}}',
+                     '{{Ticket.num_assigned}}', 
+                     '{{Ticket.num_accepted}}', 
+                     '{{Ticket.num_fixed}}', 
+                     '{{Ticket.num_fixed_v}}',
+                     '{{Ticket.num_wont_fix_nr}}',
+                     '{{Ticket.num_wont_fix_ib}}',
+                     '{{Ticket.num_wont_fix_o}}',
+                     '{{Ticket.num_wont_fix_i}}',
+                     '{{Ticket.num_duplicate}}',],
 
+              backgroundColor: [
+                  '#8dd3c7',
+                  '#ffffb3',
+                  '#bebada',
+                  '#fb8072',
+                  '#80b1d3',
+                  '#fdb462',
+                  '#b3de69',
+                  '#fccde5',
+                  '#d9d9d9',
+                  '#bc80bd',
+              ]
+          }]
+        },
+        options: {
+          legend: {
+            display: false,
+          }
+        }
+      });
+
+      // Types Chart
+      var ctx = document.getElementById('types_chart').getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Bug', 'Feature Request', 'Customer Issue', 'Internal Cleanup', 'Process', 'Vulnerability'],
+          datasets: [{
+              label: '# of Votes',
+              data: ['{{Ticket.num_bugs}}', 
+                     '{{Ticket.num_feature_requests}}', 
+                     '{{Ticket.num_customer_issues}}', 
+                     '{{Ticket.num_internal_cleanups}}', 
+                     '{{Ticket.num_processes}}', 
+                     '{{Ticket.num_vulnerabilities}}'],
+                     
+              backgroundColor: [
+                  '#66c2a5',
+                  '#fc8d62',
+                  '#8da0cb',
+                  '#e78ac3',
+                  '#a6d854',
+                  '#ffd92f',
+              ]
+          }]
+        },
+        options: {
+          legend: {
+            display: false,
+          }
+        }
+      });
+    </script>
 {% endblock content %}
 
 <!-- Specific JS goes HERE --> 
