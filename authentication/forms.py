@@ -5,7 +5,8 @@ Copyright (c) 2019 - present AppSeed.us
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
+from django.forms import widgets
 
 class LoginForm(forms.Form):
     username = forms.CharField(
@@ -70,3 +71,22 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2')
+
+ALL_USERS = (
+    tuple(User.objects.values_list('id', 'username'))
+)
+
+GROUPS = (
+    tuple(Group.objects.values_list('id', 'name'))
+)
+
+class AddUsersToGroupForm(forms.Form):
+    all_users = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all(),
+        widget=forms.SelectMultiple(attrs={'class':'form-control select-multiple'})
+    )
+
+    all_groups = forms.ModelChoiceField(
+        queryset=Group.objects.all(),
+        widget=forms.Select(attrs={'class':'form-control select-multiple'})
+    )

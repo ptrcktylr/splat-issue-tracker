@@ -1,0 +1,68 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Manage User Roles {% endblock title %}
+
+{% block content %}
+
+<!-- Header -->
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+</div>
+
+<div class="d-flex container-fluid mt--7 justify-content-center">
+
+    <div class="col-xl-8 mb-5 mb-xl-0">
+
+        <div class="card shadow">
+          <div class="card-header border-0">
+            <div class="row align-items-center">
+              <div class="col">
+                <h2 class="mb-2">Manage User Roles</h2>
+                <h6 class="text-uppercase text-muted ls-1 mb-0"> This will replace their existing role </h6>
+                {% if msg %}
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                    {{ msg | safe }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <hr class="mb-3 mt-0">
+        
+          <!-- form -->
+          <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+
+                <label for="id_all_users" class="form-label">Add 1 of more Users</label>
+                {{ form.all_users }}
+
+                <hr class="mt-4 mb-3">
+
+                <label for="id_all_groups" class="form-label">Select a Role to assign</label>
+                {{ form.all_groups }}
+        
+                <div class="d-flex row justify-content-end mt-3 mr-3">
+                    <div class="d-flex">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    
+
+
+    {% include "includes/footer.html" %}
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}
