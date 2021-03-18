@@ -88,4 +88,4 @@ def add_users_to_group(request):
     else:
         form = AddUsersToGroupForm()
 
-    return render(request, template, {"form" : form, "msg":msg})
+    return render(request, template, {"form" : form, "msg": msg, "users": User.objects.all()})

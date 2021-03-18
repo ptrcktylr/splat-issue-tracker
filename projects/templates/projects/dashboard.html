@@ -15,8 +15,8 @@
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
-                  <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
                   <h2 class="text-white mb-0">All Projects</h2>
+                  <h6 class="text-uppercase text-light ls-1 mt-1">All projects in the database</h6>
                 </div>
               </div>
             </div>
@@ -46,16 +46,9 @@
                   <!-- Table Item -->
                   {% for project in projects %}
                   <tr>
-                    <!-- Project Name & Image -->
+                    <!-- Project Name -->
                     <th scope="row" class="name">
-                      <div class="media align-items-center">
-                        <a href="#" class="avatar rounded-circle mr-3">
-                          <img alt="Image placeholder" src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/angular.jpg">
-                        </a>
-                        <div class="media-body">
-                          <span class="mb-0 text-sm">{{ project.name }}</span>
-                        </div>
-                      </div>
+                      <a href="{% url 'project-detail' project.id %}" class="mb-0 text-sm text-white">{{ project.name }}</a>
                     </th>
                     <!-- Open Tickets -->
                     <td class="open-tickets">
@@ -64,43 +57,23 @@
                     <!-- Project Managers -->
                     <td>
                       <div class="avatar-group">
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+                        {% for manager in project.get_assigned_managers %}
+                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="{{manager.first_name}} {{manager.last_name}}">
                           <img alt="Image placeholder" 
                           src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
                         </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
+                        {% endfor %}
                       </div>
                     </td>
                     <!-- Assigned Developers -->
                     <td>
                       <div class="avatar-group">
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+                        {% for dev in project.get_assigned_devs %}
+                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="{{dev.first_name}} {{dev.last_name}}">
                           <img alt="Image placeholder" 
                           src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
                         </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
-                        <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
-                          <img alt="Image placeholder" 
-                          src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
-                        </a>
+                        {% endfor %}
                       </div>
                     </td>
                   </tr>

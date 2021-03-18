@@ -8,10 +8,9 @@
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
 </div>
 
-<div class="d-flex container-fluid mt--7 justify-content-center">
+<div class="d-flex container-fluid mt--7">
 
-    <div class="col-xl-8 mb-5 mb-xl-0">
-
+    <div class="col-xl-5 mb-5 mb-xl-0">
         <div class="card shadow">
           <div class="card-header border-0">
             <div class="row align-items-center">
@@ -53,10 +52,51 @@
             </form>
           </div>
         </div>
+    </div>
+
+    <div class="col-xl-7 mb-5 mb-xl-0">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="mb-2">Current Users</h2>
+              <h6 class="text-uppercase text-muted ls-1 mb-0">All users in the database</h6>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <!-- Users table -->
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for user in users %}
+              <tr>
+                <th scope="row">
+                  {{ user.username }}
+                </th>
+                <td>
+                  {{ user.first_name }} {{ user.last_name }}
+                </td>
+                <td>
+                  {{ user.email }}
+                </td>
+                <td>
+                  {{ user.groups.first }}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
-
-    
-
+    </div>
 
     {% include "includes/footer.html" %}
 

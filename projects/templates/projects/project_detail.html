@@ -45,19 +45,12 @@
                       <tbody class="list">
                         <!-- Table Item -->
                         <tr>
-                          <!-- Project Name & Image -->
+                          <!-- Project Name -->
                           <th scope="row" class="name">
-                            <div class="media align-items-center">
-                              <a href="#" class="avatar rounded-circle mr-3">
-                                <img alt="Image placeholder" src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/angular.jpg">
-                              </a>
-                              <div class="media-body">
-                                <span class="mb-0 text-sm">{{ object.name }}</span>
-                              </div>
-                            </div>
+                            <span class="mb-0 text-sm">{{ object.name }}</span>
                           </th>
-                          <!-- Open Tickets -->
-                          <td class="open-tickets">
+                          <!-- Project Description -->
+                          <td class="description">
                             {{ object.description }}
                           </td>
                         </tr>
@@ -102,7 +95,7 @@
                             {{ assigned_user.email }}
                           </td>
                           <td>
-                            Role (change this)
+                            {{ assigned_user.groups.first }}
                           </td>
                         </tr>
                         {% endfor %}
@@ -111,6 +104,7 @@
                   </div>
                 </div>
             </div>
+            
             <div class="col-xl-7 mb-4">
                 <div class="card shadow">
                   <div class="card-header border-0">

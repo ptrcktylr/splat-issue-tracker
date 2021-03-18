@@ -21,4 +21,8 @@ class Project(models.Model):
     def num_open_tickets(self):
         return self.tickets.filter(Q(status='new') | Q(status='assigned') | Q(status='accepted') ).count()
     
-   
+    def get_assigned_managers(self):
+        return self.assigned_users.filter(groups__name='project manager')
+    
+    def get_assigned_devs(self):
+        return self.assigned_users.filter(groups__name='developer')
