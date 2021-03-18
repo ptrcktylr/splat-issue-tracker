@@ -151,13 +151,14 @@
                   </div>
               </div>
             </div>
+            <!-- Ticket History table -->
             <div class="table-responsive">
-              <!-- Ticket History table -->
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
                     <th scope="col">Title</th>
                     <th scope="col">Description</th>
+                    <th scope="col">Type</th>
                     <th scope="col">Priority</th>
                     <th scope="col">Status</th>
                     <th scope="col">Assigned Developer</th>
@@ -173,6 +174,9 @@
                       </th>
                       <td>
                         <textarea readonly name="ticket-description" id="" rows="3" style="min-width: 100%;resize:none">{{ history.description }}</textarea>
+                      </td>
+                      <td>
+                          {{ history.type }}
                       </td>
                       <td>
                           {{ history.priority }}
