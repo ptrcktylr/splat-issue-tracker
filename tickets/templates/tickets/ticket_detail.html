@@ -1,0 +1,209 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} {{ object.title }} {% endblock title %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+      <div class="container-fluid">
+        <div class="header-body">
+          <!-- Card stats -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid mt--7">
+
+      <div class="row mt-4">
+        <div class="col-xl-6 mb-4">
+            <div class="card shadow">
+              <div class="card-header border-0">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h6 class="text-uppercase text-muted ls-1 mb-1">Details for Ticket #{{ object.id }}</h6>
+                        <h3 class="mb-0">Ticket Details</h3>
+                    </div>
+                    <div class="col text-right">
+                        <a href="{% url 'ticket-update' object.id %}" class="btn btn-sm btn-primary">Edit Ticket</a>
+                    </div>
+                </div>
+              </div>
+
+              <!-- Ticket Details -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="text-uppercase">Ticket Title</h5>
+                    <p class="ml-1">{{ object.title }}</p>
+                  </div>
+                  <div class="col">
+                    <h5 class="text-uppercase">Ticket Description</h5>
+                    <p class="ml-1"><textarea readonly name="ticket-description" style="min-width: 100%;resize:none">{{ object.description }}</textarea></p>
+                  </div>
+                </div>
+
+                <hr class="mb-3 mt-0">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="text-uppercase">Assigned Developer</h5>
+                    <p class="ml-1">{{ object.assigned_to }}</p>
+                  </div>
+                  <div class="col">
+                    <h5 class="text-uppercase">Submitted By</h5>
+                    <p class="ml-1">{{ object.submitted_by }}</p>
+                  </div>
+                </div>
+
+                <hr class="mb-3 mt-0">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="text-uppercase">Project</h5>
+                    <p class="ml-1">{{ object.project }}</p>
+                  </div>
+                  <div class="col">
+                    <h5 class="text-uppercase">Ticket Type</h5>
+                    <p class="ml-1">{{ object.type }}</p>
+                  </div>
+                </div>
+
+                <hr class="mb-3 mt-0">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="text-uppercase">Ticket Status</h5>
+                    <p class="ml-1">{{ object.status }}</p>
+                  </div>
+                  <div class="col">
+                    <h5 class="text-uppercase">Ticket Priority</h5>
+                    <p class="ml-1">{{ object.priority }}</p>
+                  </div>
+                </div>
+
+                <hr class="mb-3 mt-0">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="text-uppercase">Created</h5>
+                    <p class="ml-1">{{ object.created_at }}</p>
+                  </div>
+                  <div class="col">
+                    <h5 class="text-uppercase">Updated</h5>
+                    <p class="ml-1">{{ object.updated_at }}</p>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-6 mb-4">
+            <div class="card shadow">
+              <div class="card-header border-0">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h6 class="text-uppercase text-muted ls-1 mb-1">All comments for Ticket #{{ object.id }}</h6>
+                        <h3 class="mb-0">Ticket Comments</h3>
+                    </div>
+                    <div class="col text-right">
+                        <a href="#" class="btn btn-sm btn-primary">Add Comment</a>
+                    </div>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <!-- Comments table -->
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Commenter</th>
+                      <th scope="col">Message</th>
+                      <th scope="col">Created</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for comment in object.comments.all %}
+                    <tr>
+                        <th scope="row">
+                            <a href="#" class="text-body">{{ comment.author }}</a>
+                        </th>
+                        <td>
+                            {{ comment.content }}
+                        </td>
+                        <td>
+                            {{ comment.created_at }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-xl-12 mb-4">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                  <div class="col">
+                      <h6 class="text-uppercase text-muted ls-1 mb-1">Historical Records for ticket #{{ object.id }}</h6>
+                      <h3 class="mb-0">Ticket History</h3>
+                  </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <!-- Ticket History table -->
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Priority</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Assigned Developer</th>
+                    <th scope="col">Date/Time</th>
+                    <th scope="col">Changed By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for history in object.history.all %}
+                  <tr>
+                      <th scope="row">
+                          <a href="#" class="text-body">{{ history.title }}</a>
+                      </th>
+                      <td>
+                        <textarea readonly name="ticket-description" id="" rows="3" style="min-width: 100%;resize:none">{{ history.description }}</textarea>
+                      </td>
+                      <td>
+                          {{ history.priority }}
+                      </td>
+                      <td>
+                          {{ history.status }}
+                      </td>
+                      <td>
+                          {{ history.assigned_to }}
+                      </td>
+                      <td>
+                          {{ history.history_date }}
+                      </td>
+                      <td>
+                          {{ history.history_user }}
+                      </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+      </div>
+      </div>
+
+      {% include "includes/footer.html" %}
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

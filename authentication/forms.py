@@ -71,14 +71,6 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2')
 
-ALL_USERS = (
-    tuple(User.objects.values_list('id', 'username'))
-)
-
-GROUPS = (
-    tuple(Group.objects.values_list('id', 'name'))
-)
-
 class AddUsersToGroupForm(forms.Form):
     all_users = forms.ModelMultipleChoiceField(
         queryset=User.objects.all(),

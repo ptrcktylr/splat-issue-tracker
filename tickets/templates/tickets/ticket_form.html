@@ -1,0 +1,52 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} {% if 'update' in request.path %} Update Ticket {% else %} New Ticket {% endif %} {% endblock title %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+    </div>
+
+    <div class="container-fluid mt--7">
+        <div class="row mt-4 d-flex justify-content-center">
+            <div class="col-xl-8 mb-5 mb-xl-0">
+              <div class="card shadow">
+                <div class="card-header border-0">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <h3 class="mb-2">{% if 'update' in request.path %} Update Ticket {% elif 'project' in request.path %} New Ticket for Existing Project {{ args }} {% else %} New Ticket {% endif %}</h3>
+                      <h6 class="text-uppercase text-muted ls-1 mb-0">{% if 'update' not in request.path %} You will be added as the Ticket Submitter {% else %} Updating existing project {% endif %}</h6>
+                    </div>
+                  </div>
+                </div>
+
+                <hr class="mb-3 mt-0">
+                
+                <div class="card-body">
+                    <div class="form-group">
+                        <form class="d-flex flex-column justify-content-center" id="ticket_form" method="POST">
+                            {% csrf_token %}
+                            {{ form }}
+
+                            <div class="d-flex row justify-content-end mt-3 mr-3">
+                                <div class="d-flex">
+                                    <a href="{% if 'update' in request.path %} {% url 'ticket-detail' object.id %} {% elif 'project' in request.path %} {% url 'projects' %} {% else %} {% url 'tickets' %} {% endif %}" class="btn btn-danger" type="button">Cancel</a>
+                                    <button class="btn btn-primary" type="submit">{% if 'update' in request.path %} Update Ticket {% else %} Create Ticket {% endif %}</button>
+                                </div>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        {% include "includes/footer.html" %}
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

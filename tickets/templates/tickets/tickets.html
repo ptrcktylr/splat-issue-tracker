@@ -15,6 +15,68 @@
 
     <div class="container-fluid mt--7">
 
+      <div class="row mt-4">
+        <div class="col-xl mb-5 mb-xl-0">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="mb-0">My Tickets</h3>
+                  <h6 class="text-uppercase text-muted ls-1 mt-1">All Ticket in the database</h6>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <!-- Tickets table -->
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Project</th>
+                    <th scope="col">Assigned Developer</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Priority</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Created</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for ticket in tickets %}
+                  <tr>
+                    <th scope="row">
+                      <a href="{% url 'ticket-detail' ticket.id %}" class="mb-0 text-sm text-body">{{ ticket.title }}</a>
+                    </th>
+                    <td>
+                      {{ ticket.project }}
+                    </td>
+                    <td>
+                      {% if not ticket.assigned_to %}
+                      N/A
+                      {% else %}
+                      {{ ticket.assigned_to }}
+                      {% endif %}
+                    </td>
+                    <td>
+                      {{ ticket.status }}
+                    </td>
+                    <td>
+                      {{ ticket.priority }}
+                    </td>
+                    <td>
+                      {{ ticket.type }}
+                    </td>
+                    <td>
+                      {{ ticket.created_at }}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {% include "includes/footer.html" %}
 
     </div>

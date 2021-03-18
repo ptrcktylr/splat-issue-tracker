@@ -4,6 +4,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('tickets/', views.tickets, name='tickets'),
+    path('tickets/', views.TicketListView.as_view(), name='tickets'),
     path('ticket/', views.ticket, name='ticket-num'),
+    path('ticket/<int:pk>/', views.TicketDetailView.as_view(), name='ticket-detail'),
+    path('ticket/new/', views.TicketCreateView.as_view(), name='ticket-create'),
+    path('ticket/<int:pk>/update', views.TicketUpdateView.as_view(), name='ticket-update'),
 ]

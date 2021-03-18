@@ -3,6 +3,7 @@ from django.db.models.deletion import CASCADE, PROTECT
 from django.contrib.auth.models import User
 from projects.models import Project
 from simple_history.models import HistoricalRecords
+from django.urls import reverse
 
 PRIORITY_CHOICES = (('critical', 'Critical'),
                     ('major', 'Major'),
@@ -47,6 +48,9 @@ class Ticket(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_absolute_url(self):
+        return reverse('ticket-detail', kwargs={'pk': self.pk})
     
     # There's probably a better way to do this.. 
     # Priorities

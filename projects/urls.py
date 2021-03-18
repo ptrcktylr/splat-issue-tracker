@@ -2,6 +2,7 @@
 
 from django.urls import path
 from . import views
+from tickets.views import TicketWithProjectCreateView
 
 urlpatterns = [
     path('', views.dashboard, name='dashboard'),
@@ -9,4 +10,5 @@ urlpatterns = [
     path('project/<int:pk>/', views.ProjectDetailView.as_view(), name='project-detail'),
     path('project/new/', views.ProjectCreateView.as_view(), name='project-create'),
     path('project/<int:pk>/update', views.ProjectUpdateView.as_view(), name='project-update'),
+    path('project/<int:pk>/ticket/new', TicketWithProjectCreateView.as_view(), name='project-ticket-create')
 ]
