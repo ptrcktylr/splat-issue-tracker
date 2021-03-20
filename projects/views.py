@@ -15,23 +15,20 @@ def dashboard(request):
         'projects': Project.objects.all(),
         'Ticket': Ticket,
         'tickets':Ticket.objects.all(),
-        'user_tickets':Ticket.objects.filter(assigned_to = request.user)
+        'user_tickets':Ticket.objects.filter(assigned_to = request.user),
+        'assigned_projects': request.user.assigned_projects.all(),
     }
     return render(request, 'projects/dashboard.html', context)
 
 @login_required(login_url='/login')
 def projects(request):
-    context = {
-        'projects': Project.objects.all(),
-        }
-    return render(request, 'projects/projects.html', context)
+    return render(request, 'projects/projects.html')
 
 class ProjectListView(LoginRequiredMixin, ListView):
     login_url = '/login/'
     model = Project
     template_name = 'projects/projects.html' #<app>/<model>_<viewtype>.html
     context_object_name = 'projects'
-    ordering = ['-created_at']
 
 class ProjectDetailView(LoginRequiredMixin, DetailView):
     login_url = '/login/'

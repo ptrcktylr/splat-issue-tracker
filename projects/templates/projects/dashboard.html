@@ -1,5 +1,6 @@
 {% extends 'layouts/base.html' %}
 {% block title %} Dashboard {% endblock title %}
+{% load group_tags %}
 
 {% block content %}
 
@@ -15,8 +16,14 @@
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
+                  {% if request.user|has_group:"admin" %}
                   <h2 class="text-white mb-0">All Projects</h2>
                   <h6 class="text-uppercase text-light ls-1 mt-1">All projects in the database</h6>
+                  {% else %}
+                  <h2 class="text-white mb-0">All Projects</h2>
+                  <h6 class="text-uppercase text-light ls-1 mt-1">All projects you are assigned to</h6>
+                  {% endif %}
+                  
                 </div>
               </div>
             </div>
@@ -44,7 +51,45 @@
                 <!-- Table Body -->
                 <tbody class="list">
                   <!-- Table Item -->
-                  {% for project in projects %}
+                  {% if request.user|has_group:"admin" %}
+                    {% for project in projects%}
+                    <tr>
+                      <!-- Project Name -->
+                      <th scope="row" class="name">
+                        <a href="{% url 'project-detail' project.id %}" class="mb-0 text-sm text-white">{{ project.name }}</a>
+                      </th>
+                      <!-- Open Tickets -->
+                      <td class="open-tickets">
+                        {{ project.num_open_tickets }}
+                      </td>
+                      <!-- Project Managers -->
+                      <td>
+                        <div class="avatar-group">
+                          {% for manager in project.get_assigned_managers %}
+                          <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="{{manager.first_name}} {{manager.last_name}}">
+                            <img alt="Image placeholder" 
+                            src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
+                          </a>
+                          {% endfor %}
+                        </div>
+                      </td>
+                      <!-- Assigned Developers -->
+                      <td>
+                        <div class="avatar-group">
+                          {% for dev in project.get_assigned_devs %}
+                          <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="{{dev.first_name}} {{dev.last_name}}">
+                            <img alt="Image placeholder" 
+                            src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
+                          </a>
+                          {% endfor %}
+                        </div>
+                      </td>
+                    </tr>
+                    {% endfor %}
+
+                  {% else %}
+
+                  {% for project in assigned_projects %}
                   <tr>
                     <!-- Project Name -->
                     <th scope="row" class="name">
@@ -78,6 +123,8 @@
                     </td>
                   </tr>
                   {% endfor %}
+
+                  {% endif %}
                 </tbody>
               </table>
             </div>
@@ -85,7 +132,8 @@
         </div>
       </div>
 
-      {% if user_tickets|length > 0 %}
+      {% if request.user|has_group:"admin" %}
+
       <div class="row mt-4">
         <div class="col-xl mb-5 mb-xl-0">
           <div class="card shadow">
@@ -93,7 +141,7 @@
               <div class="row align-items-center">
                 <div class="col">
                   <h3 class="mb-0">My Tickets</h3>
-                  <h6 class="text-uppercase text-muted ls-1 mt-1">Tickets assigned to you</h6>
+                  <h6 class="text-uppercase text-muted ls-1 mt-1">All tickets in the database</h6>
                 </div>
               </div>
             </div>
@@ -109,7 +157,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for ticket in user_tickets %}
+                  {% for ticket in tickets %}
                   <tr>
                     <th scope="row">
                       <a href="{% url 'ticket-detail' ticket.id %}" class="mb-0 text-sm text-body">{{ ticket.title }}</a>
@@ -131,7 +179,57 @@
           </div>
         </div>
       </div>
+
+      {% else %}
+        {% if user_tickets|length > 0 %}
+        <div class="row mt-4">
+          <div class="col-xl mb-5 mb-xl-0">
+            <div class="card shadow">
+              <div class="card-header border-0">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h3 class="mb-0">My Tickets</h3>
+                    <h6 class="text-uppercase text-muted ls-1 mt-1">Tickets assigned to you</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <!-- Tickets table -->
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Ticket Name</th>
+                      <th scope="col">Project</th>
+                      <th scope="col">Priority</th>
+                      <th scope="col">Type</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for ticket in user_tickets %}
+                    <tr>
+                      <th scope="row">
+                        <a href="{% url 'ticket-detail' ticket.id %}" class="mb-0 text-sm text-body">{{ ticket.title }}</a>
+                      </th>
+                      <td>
+                        {{ ticket.project }}
+                      </td>
+                      <td>
+                        {{ ticket.status }}
+                      </td>
+                      <td>
+                        {{ ticket.type }}
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
       {% endif %}
+      
 
       <div class="row mt-4">
         <div class="col-xl mb-5 mb-xl-0">

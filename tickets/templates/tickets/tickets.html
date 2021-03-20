@@ -1,6 +1,7 @@
 {% extends 'layouts/base.html' %}
 
 {% block title %} Tickets {% endblock title %}
+{% load group_tags %}
 
 {% block content %}
 
@@ -15,14 +16,28 @@
 
     <div class="container-fluid mt--7">
 
-      <div class="row mt-4">
+      <div class="row">
         <div class="col-xl mb-5 mb-xl-0">
+          {% if request.user|has_group:"admin" or request.user|has_group:"submitter" %}
+          <a type="button" href="/ticket/new/" class="btn btn-secondary btn-lg btn-block mb-4">Create New Ticket</a>
+          {% endif %}
           <div class="card shadow">
             <div class="card-header border-0">
               <div class="row align-items-center">
                 <div class="col">
-                  <h3 class="mb-0">My Tickets</h3>
-                  <h6 class="text-uppercase text-muted ls-1 mt-1">All Ticket in the database</h6>
+                  {% if request.user|has_group:"admin" %}
+                  <h2 class="mb-0">All Tickets</h2>
+                  <h6 class="text-uppercase text-muted ls-1 mt-1">All tickets in the database</h6>
+                  {% elif request.user|has_group:"project manager" %}
+                  <h2 class="mb-0">My Tickets</h2>
+                  <h6 class="text-uppercase text-muted ls-1 mt-1">All the tickets you have for your projects</h6>
+                  {% elif request.user|has_group:"developer" %}
+                  <h2 class="mb-0">My Tickets</h2>
+                  <h6 class="text-uppercase text-muted ls-1 mt-1">All the tickets assigned to you</h6>
+                  {% elif request.user|has_group:"submitter" %}
+                  <h2 class="mb-0">My Tickets</h2>
+                  <h6 class="text-uppercase text-muted ls-1 mt-1">All tickets you have submitted</h6>
+                  {% endif %}
                 </div>
               </div>
             </div>
@@ -41,35 +56,136 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for ticket in tickets %}
-                  <tr>
-                    <th scope="row">
-                      <a href="{% url 'ticket-detail' ticket.id %}" class="mb-0 text-sm text-body">{{ ticket.title }}</a>
-                    </th>
-                    <td>
-                      {{ ticket.project }}
-                    </td>
-                    <td>
-                      {% if not ticket.assigned_to %}
-                      N/A
-                      {% else %}
-                      {{ ticket.assigned_to }}
-                      {% endif %}
-                    </td>
-                    <td>
-                      {{ ticket.status }}
-                    </td>
-                    <td>
-                      {{ ticket.priority }}
-                    </td>
-                    <td>
-                      {{ ticket.type }}
-                    </td>
-                    <td>
-                      {{ ticket.created_at }}
-                    </td>
-                  </tr>
+                  {% if request.user|has_group:"admin" %}
+                    {% for ticket in tickets %}
+                    <tr>
+                      <th scope="row">
+                        <a href="{% url 'ticket-detail' ticket.id %}" class="mb-0 text-sm text-body">{{ ticket.title }}</a>
+                      </th>
+                      <td>
+                        {{ ticket.project }}
+                      </td>
+                      <td>
+                        {% if not ticket.assigned_to %}
+                        N/A
+                        {% else %}
+                        {{ ticket.assigned_to }}
+                        {% endif %}
+                      </td>
+                      <td>
+                        {{ ticket.status }}
+                      </td>
+                      <td>
+                        {{ ticket.priority }}
+                      </td>
+                      <td>
+                        {{ ticket.type }}
+                      </td>
+                      <td>
+                        {{ ticket.created_at }}
+                      </td>
+                    </tr>
+                    {% endfor %}
+
+                  {% elif request.user|has_group:"project manager" %}
+                    
+                  {% for project in user.assigned_projects.all %}
+                    {% for ticket in project.tickets.all %}
+                    <tr>
+                      <th scope="row">
+                        <a href="{% url 'ticket-detail' ticket.id %}" class="mb-0 text-sm text-body">{{ ticket.title }}</a>
+                      </th>
+                      <td>
+                        {{ ticket.project }}
+                      </td>
+                      <td>
+                        {% if not ticket.assigned_to %}
+                        N/A
+                        {% else %}
+                        {{ ticket.assigned_to }}
+                        {% endif %}
+                      </td>
+                      <td>
+                        {{ ticket.status }}
+                      </td>
+                      <td>
+                        {{ ticket.priority }}
+                      </td>
+                      <td>
+                        {{ ticket.type }}
+                      </td>
+                      <td>
+                        {{ ticket.created_at }}
+                      </td>
+                    </tr>
+                    {% endfor %}
                   {% endfor %}
+
+                  {% elif request.user|has_group:"developer"%}
+                  
+                    {% for ticket in user.assigned_tickets.all %}
+                    <tr>
+                      <th scope="row">
+                        <a href="{% url 'ticket-detail' ticket.id %}" class="mb-0 text-sm text-body">{{ ticket.title }}</a>
+                      </th>
+                      <td>
+                        {{ ticket.project }}
+                      </td>
+                      <td>
+                        {% if not ticket.assigned_to %}
+                        N/A
+                        {% else %}
+                        {{ ticket.assigned_to }}
+                        {% endif %}
+                      </td>
+                      <td>
+                        {{ ticket.status }}
+                      </td>
+                      <td>
+                        {{ ticket.priority }}
+                      </td>
+                      <td>
+                        {{ ticket.type }}
+                      </td>
+                      <td>
+                        {{ ticket.created_at }}
+                      </td>
+                    </tr>
+                    {% endfor %}
+
+                  {% elif request.user|has_group:"submitter"%}
+                  
+                    {% for ticket in user.submitted_tickets.all %}
+                    <tr>
+                      <th scope="row">
+                        <a href="{% url 'ticket-detail' ticket.id %}" class="mb-0 text-sm text-body">{{ ticket.title }}</a>
+                      </th>
+                      <td>
+                        {{ ticket.project }}
+                      </td>
+                      <td>
+                        {% if not ticket.assigned_to %}
+                        N/A
+                        {% else %}
+                        {{ ticket.assigned_to }}
+                        {% endif %}
+                      </td>
+                      <td>
+                        {{ ticket.status }}
+                      </td>
+                      <td>
+                        {{ ticket.priority }}
+                      </td>
+                      <td>
+                        {{ ticket.type }}
+                      </td>
+                      <td>
+                        {{ ticket.created_at }}
+                      </td>
+                    </tr>
+                    {% endfor %}
+
+                  {% endif %}
                 </tbody>
               </table>
             </div>
