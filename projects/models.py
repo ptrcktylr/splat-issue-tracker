@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.deletion import PROTECT
 from django.urls import reverse
 from django.db.models import Q
 
@@ -8,6 +9,7 @@ class Project(models.Model):
     description = models.TextField()
 
     assigned_users = models.ManyToManyField(User, related_name='assigned_projects', blank=True)
+    created_by = models.ForeignKey(User, on_delete=PROTECT, related_name='created_projects')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

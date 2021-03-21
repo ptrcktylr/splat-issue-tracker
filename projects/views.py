@@ -1,3 +1,5 @@
+from django.http import request
+from django.utils import decorators
 from tickets.models import Ticket
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
@@ -6,7 +8,9 @@ from .models import Project
 from django.contrib.auth.models import User
 from .forms import ProjectForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from authentication.decorators import admin_user, developer_user, project_manager_user, submitter_user
 
 @login_required(login_url='/login')
 def dashboard(request):
@@ -34,17 +38,20 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
     login_url = '/login/'
     model = Project
 
+decorators = [project_manager_user]
+@method_decorator(decorators, name='dispatch')
 class ProjectCreateView(LoginRequiredMixin, CreateView):
     login_url = '/login/'
     model = Project
     form_class = ProjectForm
 
     def form_valid(self, form):
+        form.instance.created_by = self.request.user
         form.save()
         form.instance.assigned_users.add(self.request.user)
         return super().form_valid(form)
 
-class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     login_url = '/login/'
     model = Project
     form_class = ProjectForm
@@ -52,3 +59,7 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+    
+    def test_func(self):
+        project = self.get_object()
+        return (self.request.user == project.created_by) or (self.request.user.groups.filter(name='admin').exists())

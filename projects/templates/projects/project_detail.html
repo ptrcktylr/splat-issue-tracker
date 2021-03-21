@@ -1,4 +1,5 @@
 {% extends 'layouts/base.html' %}
+{% load group_tags %}
 
 {% block title %} {{ object.name }} {% endblock title %}
 
@@ -22,7 +23,9 @@
                          </h6>
                       </div>
                       <div class="col text-right">
+                        {% if object.created_by == user or user|has_group:"admin" %}
                         <a href="{% url 'project-update' object.id %}" class="btn btn-sm btn-primary">Edit Project</a>
+                        {% endif %}
                       </div>
                     </div>
                   </div>
@@ -114,7 +117,11 @@
                             <h3 class="mb-0">Project Tickets</h3>
                         </div>
                         <div class="col text-right">
+                            {% if request.user|has_group:"admin" %}
                             <a href="{% url 'project-ticket-create' project.id %}" class="btn btn-sm btn-primary">Create Ticket</a>
+                            {% elif request.user|has_group:"submitter" and request.user in object.assigned_users %}
+                            <a href="{% url 'project-ticket-create' project.id %}" class="btn btn-sm btn-primary">Create Ticket</a>
+                            {% endif %}
                         </div>
                     </div>
                   </div>

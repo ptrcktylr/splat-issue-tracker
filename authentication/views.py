@@ -13,7 +13,7 @@ from django.forms.utils import ErrorList
 from django.http import HttpResponse
 from .forms import LoginForm, SignUpForm, AddUsersToGroupForm
 from django.contrib.auth.decorators import login_required
-from .decorators import unauthenticated_user
+from .decorators import unauthenticated_user, admin_user
 
 @unauthenticated_user
 def login_view(request):
@@ -68,6 +68,7 @@ def profile_view(request):
     return render(request, 'profile.html')
 
 @login_required(login_url='/login/') # only allow admins to do this
+@admin_user
 def add_users_to_group(request):
     template = 'manage_user_roles.html'
     msg = None

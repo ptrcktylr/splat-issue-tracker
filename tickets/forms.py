@@ -26,3 +26,17 @@ class TicketForm(forms.ModelForm):
             'type': forms.Select(attrs={'class':'form-control'}),
             'priority': forms.Select(attrs={'class':'form-control'}),
         }
+
+class AdminTicketForm(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ('project', 'title', 'description', 'assigned_to', 'type', 'priority',)
+
+        widget = {
+            'project': forms.Select(attrs={'class':'form-control'}),
+            'title': forms.TextInput(attrs={'class':'form-control'}),
+            'description': forms.Textarea(attrs={'class':'form-control'}),
+            'assigned_to': forms.Select(attrs={'class':'form-control'}),
+            'type': forms.Select(attrs={'class':'form-control'}),
+            'priority': forms.Select(attrs={'class':'form-control'}),
+        }

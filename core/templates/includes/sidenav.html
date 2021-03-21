@@ -1,3 +1,4 @@
+{% load group_tags %}
 
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
@@ -93,6 +94,7 @@
           <a class=" nav-link {% if request.path == '/' %} active {% endif %}" href="/"> <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>
+          {% if request.user|has_group:"admin" %}
           <li class="nav-item">
             <a class="nav-link {% if 'role-managment' in request.path %} active {% endif %}" href="/role-managment/">
               <i class="fas fa-users-cog text-orange"></i> Manage User Roles
@@ -103,6 +105,7 @@
               <i class="fas fa-users text-purple"></i> Manage Project Users
             </a>
           </li>
+          {% endif %}
           <li class="nav-item">
             <a class="nav-link {% if 'projects' in request.path %} active {% elif 'project/' in request.path %} active {% endif %}" href="/projects/">
               <i class="fas fa-project-diagram text-green"></i> My Projects
