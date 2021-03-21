@@ -114,3 +114,20 @@ class TicketWithProjectCreateView(LoginRequiredMixin, CreateView):
         form.instance.submitted_by = self.request.user
         form.instance.project = Project.objects.filter(id = self.kwargs['pk']).first() # gets project id as pk from project.urls
         return super().form_valid(form)
+
+
+class TicketDeveloperUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    login_url = '/login/'
+    model = Ticket
+    fields = ['title', 'description', 'type', 'priority', 'status']
+
+    def get_form(self, *args, **kwargs):
+        form = super(TicketDeveloperUpdateView, self).get_form(*args, **kwargs)
+        return form
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+    def test_func(self):
+        ticket = self.get_object()
+        return ( self.request.user.groups.filter(name='developer').exists() and ticket.assigned_to == self.request.user )
