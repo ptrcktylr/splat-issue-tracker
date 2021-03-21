@@ -28,3 +28,23 @@ class Project(models.Model):
     
     def get_assigned_devs(self):
         return self.assigned_users.filter(groups__name='developer')
+    
+    def clear_admins(self):
+        admins = self.assigned_users.filter(groups__name='admin')
+        for admin in admins:
+            self.assigned_users.remove(admin)
+
+    def clear_project_managers(self):
+        project_managers = self.assigned_users.filter(groups__name='project manager')
+        for project_manager in project_managers:
+            self.assigned_users.remove(project_manager)
+    
+    def clear_developers(self):
+        developers = self.assigned_users.filter(groups__name='developer')
+        for developer in developers:
+            self.assigned_users.remove(developer)
+
+    def clear_submitters(self):
+        submitters = self.assigned_users.filter(groups__name='submitter')
+        for submitter in submitters:
+            self.assigned_users.remove(submitter)

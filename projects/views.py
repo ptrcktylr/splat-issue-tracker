@@ -6,7 +6,7 @@ from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.edit import UpdateView
 from .models import Project
 from django.contrib.auth.models import User
-from .forms import ProjectForm
+from .forms import ProjectForm, PMProjectManagmentForm, AdminProjectManagmentForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -63,3 +63,74 @@ class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         project = self.get_object()
         return (self.request.user == project.created_by) or (self.request.user.groups.filter(name='admin').exists())
+
+@login_required(login_url='/login/') 
+@admin_user # only allow admins to do this
+def admin_project_managment(request):
+    template = 'admin_project_managment.html'
+    msg = None
+
+    if request.method == 'POST':
+        form = AdminProjectManagmentForm(request.POST)
+        
+        if form.is_valid():
+            projects = [Project.objects.get(pk=pk) for pk in request.POST.getlist('projects', '')]
+            admins = [User.objects.get(pk=pk) for pk in request.POST.getlist('admins', '')]
+            project_managers = [User.objects.get(pk=pk) for pk in request.POST.getlist('project_managers', '')]
+            developers = [User.objects.get(pk=pk) for pk in request.POST.getlist('developers', '')]
+            submitters = [User.objects.get(pk=pk) for pk in request.POST.getlist('submitters', '')]
+
+            for project in projects:
+                # clear users
+                project.clear_admins()
+                project.clear_project_managers()
+                project.clear_developers()
+                project.clear_submitters()
+                
+                
+                # assign users
+                for admin in admins:
+                    project.assigned_users.add(admin)
+                for project_manager in project_managers:
+                    project.assigned_users.add(project_manager)
+                for developer in developers:
+                    project.assigned_users.add(developer)
+                for submitter in submitters:
+                    project.assigned_users.add(submitter)
+
+            msg = "Roles successfully assigned!"
+    else:
+        form = AdminProjectManagmentForm()
+    
+    return render(request, template, {"form":form, "msg":msg, })
+
+@login_required(login_url='/login/') 
+@project_manager_user # only allow PMs to do this
+def pm_project_managment(request):
+    template = 'pm_project_managment.html'
+    msg = None
+
+    if request.method == 'POST':
+        form = PMProjectManagmentForm(user=request.user, data=request.POST)
+        
+        if form.is_valid():
+            projects = [Project.objects.get(pk=pk) for pk in request.POST.getlist('projects', '')]
+            developers = [User.objects.get(pk=pk) for pk in request.POST.getlist('developers', '')]
+            submitters = [User.objects.get(pk=pk) for pk in request.POST.getlist('submitters', '')]
+
+            for project in projects:
+                # clear users
+                project.clear_developers()
+                project.clear_submitters()
+
+                # assign users
+                for developer in developers:
+                    project.assigned_users.add(developer)
+                for submitter in submitters:
+                    project.assigned_users.add(submitter)
+
+            msg = "Roles successfully assigned!"
+    else:
+        form = PMProjectManagmentForm(user=request.user)
+    
+    return render(request, template, {"form":form, "msg":msg, })

@@ -80,7 +80,7 @@ class TicketUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class TicketAdminUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     login_url = '/login/'
     model = Ticket
-    fields = ['project', 'title', 'description', 'assigned_to', 'type', 'priority']
+    fields = ['project', 'title', 'description', 'assigned_to', 'type', 'priority', 'status']
     # form_class = AdminTicketForm
 
     def get_form(self, *args, **kwargs):

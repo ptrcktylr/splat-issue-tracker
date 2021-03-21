@@ -101,6 +101,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link {% if 'admin-project-managment' in request.path %} active {% endif %}" href="/admin-project-managment/">
+              <i class="fas fa-users text-purple"></i> Manage Project Users
+            </a>
+          </li>
+          {% elif request.user|has_group:"project manager" %}
+          <li class="nav-item">
             <a class="nav-link {% if 'project-managment' in request.path %} active {% endif %}" href="/project-managment/">
               <i class="fas fa-users text-purple"></i> Manage Project Users
             </a>

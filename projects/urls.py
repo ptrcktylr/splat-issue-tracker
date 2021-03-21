@@ -10,5 +10,7 @@ urlpatterns = [
     path('project/<int:pk>/', views.ProjectDetailView.as_view(), name='project-detail'),
     path('project/new/', views.ProjectCreateView.as_view(), name='project-create'),
     path('project/<int:pk>/update', views.ProjectUpdateView.as_view(), name='project-update'),
-    path('project/<int:pk>/ticket/new', TicketWithProjectCreateView.as_view(), name='project-ticket-create')
+    path('project/<int:pk>/ticket/new', TicketWithProjectCreateView.as_view(), name='project-ticket-create'),
+    path('admin-project-managment/', views.admin_project_managment, name='admin-project-managment'),
+    path('project-managment/', views.pm_project_managment, name='project-managment'),
 ]
