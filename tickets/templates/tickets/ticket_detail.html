@@ -28,10 +28,10 @@
                     <div class="col text-right">
                       {% if request.user|has_group:"admin" %}
                       <a href="{% url 'ticket-admin-update' object.id %}" class="btn btn-sm btn-primary">Edit/Assign Ticket</a>
-                      {% elif object.submitted_by == user %}
-                      <a href="{% url 'ticket-update' object.id %}" class="btn btn-sm btn-primary">Edit Ticket</a>
                       {% elif user in object.project.assigned_users.all and request.user|has_group:"project manager" %}
                       <a href="{% url 'ticket-admin-update' object.id %}" class="btn btn-sm btn-primary">Edit/Assign Ticket</a>
+                      {% elif object.submitted_by == user %}
+                      <a href="{% url 'ticket-update' object.id %}" class="btn btn-sm btn-primary">Edit Ticket</a>
                       {% endif %}
                     </div>
                 </div>
