@@ -118,7 +118,7 @@
                         <div class="col text-right">
                             {% if request.user|has_group:"admin" %}
                             <a href="{% url 'project-ticket-create' project.id %}" class="btn btn-sm btn-primary">Create Ticket</a>
-                            {% elif request.user|has_group:"submitter" and request.user in object.assigned_users %}
+                            {% elif request.user|has_group:"submitter" and request.user in object.assigned_users.all %}
                             <a href="{% url 'project-ticket-create' project.id %}" class="btn btn-sm btn-primary">Create Ticket</a>
                             {% endif %}
                         </div>

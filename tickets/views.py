@@ -107,7 +107,14 @@ class TicketAdminUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView)
 class TicketWithProjectCreateView(LoginRequiredMixin, CreateView):
     login_url = '/login/'
     model = Ticket
-    form_class = TicketFormWithProject
+    fields = ['project', 'title', 'description', 'type', 'priority']
+
+    def get_form(self, *args, **kwargs):
+        form = super(TicketWithProjectCreateView, self).get_form(*args, **kwargs)
+
+        form.fields['project'].queryset = Project.objects.filter(id=self.kwargs['pk'])
+        return form
+
 
     def form_valid(self, form, *args, **kwargs):
         form.instance.status = 'new'
