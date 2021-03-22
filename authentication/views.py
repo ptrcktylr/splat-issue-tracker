@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User, Group
 from django.forms.utils import ErrorList
 from django.http import HttpResponse
-from .forms import LoginForm, SignUpForm, AddUsersToGroupForm
+from .forms import LoginForm, SignUpForm, AddUsersToGroupForm, UpdateProfileForm
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, admin_user
 
@@ -90,3 +90,36 @@ def add_users_to_group(request):
         form = AddUsersToGroupForm()
 
     return render(request, template, {"form" : form, "msg": msg, "users": User.objects.all()})
+
+@login_required(login_url='/login/')
+def update_profile(request):
+    template = 'profile.html'
+    msg = None
+
+    if request.method == "POST":
+        form = UpdateProfileForm(request.POST)
+
+        if form.is_valid():
+
+            user = request.user
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+
+            user.email = username
+            user.email = email
+            user.first_name = first_name
+            user.last_name = last_name
+
+            user.save()
+    
+            msg = "User sucessfully updated!"
+    else:
+        username = request.user.username
+        email = request.user.email
+        first_name = request.user.first_name
+        last_name = request.user.last_name
+        form = UpdateProfileForm(initial={'username':username, 'email':email, 'first_name':first_name, 'last_name':last_name})
+    
+    return render(request, template, {"form" : form, "msg": msg,})

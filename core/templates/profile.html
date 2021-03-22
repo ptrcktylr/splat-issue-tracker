@@ -18,34 +18,16 @@
             <div class="row justify-content-center">
               <div class="col-lg-3 order-lg-2">
                 <div class="card-profile-image">
-                  <a href="#">
-                    <img src="/static/assets/img/theme/team-4-800x800.jpg" class="rounded-circle">
-                  </a>
+                  <img src="/static/assets/img/theme/team-4-800x800.jpg" class="rounded-circle">
                 </div>
               </div>
             </div>
             <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-              <div class="d-flex justify-content-between">
-                <a href="#" class="btn btn-sm btn-info mr-4">Connect</a>
-                <a href="#" class="btn btn-sm btn-default float-right">Message</a>
-              </div>
             </div>
             <div class="card-body pt-0 pt-md-4">
               <div class="row">
                 <div class="col">
-                  <div class="card-profile-stats d-flex justify-content-center mt-md-5">
-                    <div>
-                      <span class="heading">22</span>
-                      <span class="description">Friends</span>
-                    </div>
-                    <div>
-                      <span class="heading">10</span>
-                      <span class="description">Photos</span>
-                    </div>
-                    <div>
-                      <span class="heading">89</span>
-                      <span class="description">Comments</span>
-                    </div>
+                  <div class="card-profile-stats d-flex justify-content-center mt-md-4">
                   </div>
                 </div>
               </div>
@@ -56,14 +38,11 @@
                 <div class="h5 font-weight-300">
                   {{ request.user.email }}
                 </div>
-                <div class="h5 mt-4">
-                  <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer
-                </div>
-                <div>
-                  <i class="ni education_hat mr-2"></i>University of Computer Science
-                </div>
                 <hr class="my-4" />
-                <p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
+                <p>Welcome, {{ request.user.get_full_name }}, to my Bug Tracker Application. 
+                  This project is an excellent tool for any company looking to manage their software. 
+                  Within this project, tickets for issues can be submitted and tracked through the 
+                  entire development process into completion.</p>
               </div>
             </div>
           </div>
@@ -72,28 +51,42 @@
           <div class="card bg-secondary shadow">
             <div class="card-header bg-white border-0">
               <div class="row align-items-center">
-                <div class="col-8">
-                  <h3 class="mb-0">My account</h3>
+                <div class="col">
+                  <div class="row">
+                    <div class="col">
+                      <h3 class="mb-0">My account</h3>
+                    </div>
+                    <div class="col text-right">
+                      <button class="btn btn-primary btn-sm"><i class="far fa-user-circle"></i> Upload Avatar</button>
+                      <button class="btn btn-primary btn-sm"><i class="fas fa-unlock-alt"></i> Reset Password</button>
+                    </div>
+                  </div>
+                  
+                  {% if msg %}
+                  <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                    {{ msg | safe }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                {% endif %}
                 </div>
               </div>
             </div>
             <div class="card-body">
-              <form>
+              <form method="POST">
+                {% csrf_token %}
                 <h6 class="heading-small text-muted mb-4">User information</h6>
                 <div class="pl-lg-4">
                   <div class="row">
                     <div class="col-lg-6">
-                      <div class="form-group">
                         <label class="form-control-label" for="input-username">Username</label>
-                        <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" 
-                               value="{{ request.user.username }}">
-                      </div>
+                        {{ form.username }}
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-email">Email address</label>
-                        <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="Email"
-                               value="{{ request.user.email }}">
+                        {{ form.email }}
                       </div>
                     </div>
                   </div>
@@ -101,24 +94,22 @@
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-first-name">First name</label>
-                        <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First Name" 
-                               value="{{ request.user.first_name }}">
+                        {{ form.first_name }}
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-last-name">Last name</label>
-                        <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last Name" 
-                               value="{{ request.user.last_name }}">
+                        {{ form.last_name }}
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div class="d-flex row justify-content-end mr-3">
-                    <div class="d-flex">
-                        <button class="btn btn-primary" type="submit">Update Profile</button>
-                    </div>
+                  <div class="d-flex">
+                    <button class="btn btn-primary" type="submit">Update Profile</button>
+                  </div>
                 </div>
               </form>
             </div>
