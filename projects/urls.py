@@ -13,4 +13,6 @@ urlpatterns = [
     path('project/<int:pk>/ticket/new', TicketWithProjectCreateView.as_view(), name='project-ticket-create'),
     path('admin-project-managment/', views.admin_project_managment, name='admin-project-managment'),
     path('project-managment/', views.pm_project_managment, name='project-managment'),
+    path('project-managment/<int:pk>/', views.pm_project_managment, name='single-project-managment'),
+    path('admin-project-managment/<int:pk>/', views.admin_project_managment, name='single-admin-project-managment')
 ]

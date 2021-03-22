@@ -10,7 +10,7 @@
 
 <div class="d-flex container-fluid mt--7">
 
-    <div class="col-xl-5 mb-5 mb-xl-0">
+    <div class="col-xl-4 mb-5 mb-xl-0">
         <div class="card shadow">
           <div class="card-header border-0">
             <div class="row align-items-center">
@@ -46,7 +46,7 @@
 
                 <hr class="mt-4 mb-3">
                 <h3 class="text-center">Optional Fields</h3>
-                <h6 class="text-uppercase text-center text-muted ls-1 mb-4">Select none or more of each (selecting none will remove all users of that group from selected projects)</h6>
+                <h6 class="text-uppercase text-center text-muted ls-1 mb-4">Select none or more of each (selecting none for  <strong><u>all</u></strong> will remove all users from the selected projects)</h6>
 
                 <div class="row">
                   <div class="col">
@@ -82,7 +82,7 @@
         </div>
     </div>
 
-    <div class="col-xl-7 mb-5 mb-xl-0">
+    <div class="col-xl-8 mb-5 mb-xl-0">
       <div class="card shadow">
         <div class="card-header border-0">
           <div class="row align-items-center">
@@ -97,6 +97,7 @@
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
               <tr>
+                <th scope="col">Projects</th>
                 <th scope="col">Username</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
@@ -107,10 +108,17 @@
               {% for user in users %}
               <tr>
                 <th scope="row">
-                  {{ user.username }}
+                  <div class="col">
+                    {% for project in user.assigned_projects.all %}
+                      <div class="">{{ project.name }}</div>
+                    {% endfor %}
+                  </div>
                 </th>
                 <td>
-                  {{ user.first_name }} {{ user.last_name }}
+                  {{ user.username }}
+                </td>
+                <td>
+                  {{ user.get_full_name }}
                 </td>
                 <td>
                   {{ user.email }}

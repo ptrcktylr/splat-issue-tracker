@@ -67,3 +67,17 @@ class PMProjectManagmentForm(forms.Form):
         widget=forms.SelectMultiple(attrs={'class':'form-control select-multiple'}),
         required = False,
     )
+
+class PMProjectRoleForm(forms.Form):
+
+    developers = forms.ModelMultipleChoiceField(
+        queryset=User.objects.filter(groups__name='developer').all(),
+        widget=forms.SelectMultiple(attrs={'class':'form-control select-multiple'}),
+        required = False,
+    )
+
+    submitters = forms.ModelMultipleChoiceField(
+        queryset=User.objects.filter(groups__name='submitter').all(),
+        widget=forms.SelectMultiple(attrs={'class':'form-control select-multiple'}),
+        required = False,
+    )

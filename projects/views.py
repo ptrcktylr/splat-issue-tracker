@@ -82,11 +82,11 @@ def admin_project_managment(request):
 
             for project in projects:
                 # clear users
-                project.clear_admins()
-                project.clear_project_managers()
-                project.clear_developers()
-                project.clear_submitters()
-                
+                if len(admins) + len(project_managers) + len(developers) + len(submitters) == 0 :
+                    project.clear_admins()
+                    project.clear_project_managers()
+                    project.clear_developers()
+                    project.clear_submitters()
                 
                 # assign users
                 for admin in admins:
@@ -102,7 +102,7 @@ def admin_project_managment(request):
     else:
         form = AdminProjectManagmentForm()
     
-    return render(request, template, {"form":form, "msg":msg, })
+    return render(request, template, {"form":form, "msg":msg, "users": User.objects.all()})
 
 @login_required(login_url='/login/') 
 @project_manager_user # only allow PMs to do this
@@ -119,9 +119,9 @@ def pm_project_managment(request):
             submitters = [User.objects.get(pk=pk) for pk in request.POST.getlist('submitters', '')]
 
             for project in projects:
-                # clear users
-                project.clear_developers()
-                project.clear_submitters()
+                if len(developers) + len(submitters) == 0 :
+                    project.clear_developers()
+                    project.clear_submitters()
 
                 # assign users
                 for developer in developers:
@@ -133,4 +133,4 @@ def pm_project_managment(request):
     else:
         form = PMProjectManagmentForm(user=request.user)
     
-    return render(request, template, {"form":form, "msg":msg, })
+    return render(request, template, {"form":form, "msg":msg, "users": User.objects.all()})
