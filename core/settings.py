@@ -4,9 +4,13 @@ Copyright (c) 2019 - present AppSeed.us
 """
 
 import os
+import environ
 from decouple import config
 from unipath import Path
 import dj_database_url
+
+env = environ.Env()
+env.read_env(env.str('ENV_PATH', './.env'))
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).parent
@@ -34,6 +38,9 @@ INSTALLED_APPS = [
     'projects',
     'tickets',
     'simple_history',
+    'crispy_forms',
+    'storages',
+    'authentication',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +138,23 @@ STATICFILES_DIRS = (
 )
 #############################################################
 #############################################################
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = env('EMAIL_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_PASS')
+
+# AWS_STORAGE_BUCKET_NAME=env('AWS_STORAGE_BUCKET_NAME')
+# AWS_ACCESS_KEY_ID=('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY=('AWS_SECRET_ACCESS_KEY')
+
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_DEFAULT_ACL = False
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
+MEDIA_URL='/media/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

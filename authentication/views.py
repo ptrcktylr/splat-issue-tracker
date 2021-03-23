@@ -11,9 +11,10 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User, Group
 from django.forms.utils import ErrorList
 from django.http import HttpResponse
-from .forms import LoginForm, SignUpForm, AddUsersToGroupForm, UpdateProfileForm
+from .forms import LoginForm, ProfileUpdateForm, SignUpForm, AddUsersToGroupForm, UpdateProfileForm, UserUpdateForm
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, admin_user
+from django.contrib import messages
 
 @unauthenticated_user
 def login_view(request):
@@ -65,7 +66,27 @@ def register_user(request):
 
 @login_required(login_url='/login/')
 def profile_view(request):
-    return render(request, 'profile.html')
+    msg = None
+    if request.method == "POST":
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request,f'Your account has been updated')
+            return redirect('profile')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+
+    context = {
+        'u_form':u_form,
+        'p_form':p_form,
+        'msg':msg
+    }
+
+    return render(request, 'profile.html', context)
 
 @login_required(login_url='/login/') # only allow admins to do this
 @admin_user
@@ -90,36 +111,3 @@ def add_users_to_group(request):
         form = AddUsersToGroupForm()
 
     return render(request, template, {"form" : form, "msg": msg, "users": User.objects.all()})
-
-@login_required(login_url='/login/')
-def update_profile(request):
-    template = 'profile.html'
-    msg = None
-
-    if request.method == "POST":
-        form = UpdateProfileForm(request.POST)
-
-        if form.is_valid():
-
-            user = request.user
-            username = form.cleaned_data['username']
-            email = form.cleaned_data['email']
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-
-            user.email = username
-            user.email = email
-            user.first_name = first_name
-            user.last_name = last_name
-
-            user.save()
-    
-            msg = "User sucessfully updated!"
-    else:
-        username = request.user.username
-        email = request.user.email
-        first_name = request.user.first_name
-        last_name = request.user.last_name
-        form = UpdateProfileForm(initial={'username':username, 'email':email, 'first_name':first_name, 'last_name':last_name})
-    
-    return render(request, template, {"form" : form, "msg": msg,})

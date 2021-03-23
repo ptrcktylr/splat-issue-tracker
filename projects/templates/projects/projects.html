@@ -72,9 +72,9 @@
                       <td>
                         <div class="avatar-group">
                           {% for manager in project.get_assigned_managers %}
-                          <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="{{manager.first_name}} {{manager.last_name}}">
+                          <a class="avatar avatar-sm" data-toggle="tooltip" data-original-title="{{manager.first_name}} {{manager.last_name}}">
                             <img alt="Image placeholder" 
-                            src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
+                            src="{{ manager.profile.image.url }}" class="rounded-circle">
                           </a>
                           {% endfor %}
                         </div>
@@ -83,9 +83,9 @@
                       <td>
                         <div class="avatar-group">
                           {% for dev in project.get_assigned_devs %}
-                          <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="{{dev.first_name}} {{dev.last_name}}">
+                          <a class="avatar avatar-sm" data-toggle="tooltip" data-original-title="{{dev.first_name}} {{dev.last_name}}">
                             <img alt="Image placeholder" 
-                            src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
+                            src="{{ dev.profile.image.url }}" class="rounded-circle">
                           </a>
                           {% endfor %}
                         </div>
@@ -119,9 +119,9 @@
                       <td>
                         <div class="avatar-group">
                           {% for manager in project.get_assigned_managers %}
-                          <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="{{manager.first_name}} {{manager.last_name}}">
+                          <a class="avatar avatar-sm" data-toggle="tooltip" data-original-title="{{manager.first_name}} {{manager.last_name}}">
                             <img alt="Image placeholder" 
-                            src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
+                            src="{{ manager.profile.image.url }}" class="rounded-circle">
                           </a>
                           {% endfor %}
                         </div>
@@ -130,9 +130,9 @@
                       <td>
                         <div class="avatar-group">
                           {% for dev in project.get_assigned_devs %}
-                          <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="{{dev.first_name}} {{dev.last_name}}">
+                          <a class="avatar avatar-sm" data-toggle="tooltip" data-original-title="{{dev.first_name}} {{dev.last_name}}">
                             <img alt="Image placeholder" 
-                            src="https://demos.creative-tim.com/argon-dashboard-django/assets/img/dashboard/free/theme/team-1-800x800.jpg" class="rounded-circle">
+                            src="{{ dev.profile.image.url }}" class="rounded-circle">
                           </a>
                           {% endfor %}
                         </div>
