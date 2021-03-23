@@ -6,7 +6,7 @@ Copyright (c) 2019 - present AppSeed.us
 from re import template
 from django.contrib import auth
 from django.urls import path
-from .views import login_view, profile_view, register_user, add_users_to_group
+from .views import login_view, profile_view, register_user, add_users_to_group, NewPasswordView
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import views as auth_views
 
@@ -27,5 +27,6 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'), 
         name="password_reset_complete"),
     path('profile/', profile_view, name="profile"),
-    path('role-managment/', add_users_to_group, name="role-managment")
+    path('role-managment/', add_users_to_group, name="role-managment"),
+    path('new-password/', NewPasswordView.as_view(template_name='accounts/change_password.html'), name="new-password"),
 ]

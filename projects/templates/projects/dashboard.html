@@ -68,7 +68,7 @@
                           {% for manager in project.get_assigned_managers %}
                           <a class="avatar avatar-sm" data-toggle="tooltip" data-original-title="{{manager.first_name}} {{manager.last_name}}">
                             <img alt="Image placeholder" 
-                            src="{{ manager.profile.image.url }}" class="rounded-circle">
+                            src="{{ manager.profile.image.url }}" class="rounded-circle" style="width: 32px; height: 32px; object-fit: cover;">
                           </a>
                           {% endfor %}
                         </div>
@@ -79,7 +79,7 @@
                           {% for dev in project.get_assigned_devs %}
                           <a class="avatar avatar-sm" data-toggle="tooltip" data-original-title="{{dev.first_name}} {{dev.last_name}}">
                             <img alt="Image placeholder" 
-                            src="{{ dev.profile.image.url }}" class="rounded-circle">
+                            src="{{ dev.profile.image.url }}" class="rounded-circle" style="width: 32px; height: 32px; object-fit: cover;">
                           </a>
                           {% endfor %}
                         </div>
@@ -105,7 +105,7 @@
                         {% for manager in project.get_assigned_managers %}
                         <a class="avatar avatar-sm" data-toggle="tooltip" data-original-title="{{manager.first_name}} {{manager.last_name}}">
                           <img alt="Image placeholder" 
-                          src="{{ manager.profile.image.url }}" class="rounded-circle">
+                          src="{{ manager.profile.image.url }}" class="rounded-circle" style="width: 32px; height: 32px; object-fit: cover;">
                         </a>
                         {% endfor %}
                       </div>
@@ -116,7 +116,7 @@
                         {% for dev in project.get_assigned_devs %}
                         <a class="avatar avatar-sm" data-toggle="tooltip" data-original-title="{{dev.first_name}} {{dev.last_name}}">
                           <img alt="Image placeholder" 
-                          src="{{ dev.profile.image.url }}" class="rounded-circle">
+                          src="{{ dev.profile.image.url }}" class="rounded-circle" style="width: 32px; height: 32px; object-fit: cover;">
                         </a>
                         {% endfor %}
                       </div>

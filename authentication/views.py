@@ -15,6 +15,9 @@ from .forms import LoginForm, ProfileUpdateForm, SignUpForm, AddUsersToGroupForm
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, admin_user
 from django.contrib import messages
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.messages.views import SuccessMessageMixin
 
 @unauthenticated_user
 def login_view(request):
@@ -111,3 +114,8 @@ def add_users_to_group(request):
         form = AddUsersToGroupForm()
 
     return render(request, template, {"form" : form, "msg": msg, "users": User.objects.all()})
+
+class NewPasswordView(SuccessMessageMixin, PasswordChangeView):
+    form_class = PasswordChangeForm
+    success_message = 'Password successfully changed!'
+    success_url = '/profile/'
