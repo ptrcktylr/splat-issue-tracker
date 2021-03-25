@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from authentication.decorators import admin_user, developer_user, project_manager_user, submitter_user
+from notifications.utilities import create_notification
 
 @login_required(login_url='/login')
 def dashboard(request):
@@ -83,6 +84,14 @@ def admin_project_managment(request):
             for project in projects:
                 # clear users
                 if len(admins) + len(project_managers) + len(developers) + len(submitters) == 0 :
+                    for dev in project.assigned_users.filter(groups__name='developer'):
+                        create_notification(request, dev, f"You have been removed from project {project.name} by {request.user.get_full_name()}")
+                    for sub in project.assigned_users.filter(groups__name='submitter'):
+                        create_notification(request, sub, f"You have been removed from project {project.name} by {request.user.get_full_name()}")
+                    for adm in project.assigned_users.filter(groups__name='admin'):
+                        create_notification(request, adm, f"You have been removed from project {project.name} by {request.user.get_full_name()}")
+                    for pm in project.assigned_users.filter(groups__name='project manager'):
+                        create_notification(request, pm, f"You have been removed from project {project.name} by {request.user.get_full_name()}")
                     project.clear_admins()
                     project.clear_project_managers()
                     project.clear_developers()
@@ -91,12 +100,16 @@ def admin_project_managment(request):
                 # assign users
                 for admin in admins:
                     project.assigned_users.add(admin)
+                    create_notification(request, admin, f"You have been added as an admin to project {project.name} by {request.user.get_full_name()}")
                 for project_manager in project_managers:
                     project.assigned_users.add(project_manager)
+                    create_notification(request, project_manager, f"You have been added as a project manager to project {project.name} by {request.user.get_full_name()}")
                 for developer in developers:
                     project.assigned_users.add(developer)
+                    create_notification(request, developer, f"You have been added as a developer to project {project.name} by {request.user.get_full_name()}")
                 for submitter in submitters:
                     project.assigned_users.add(submitter)
+                    create_notification(request, submitter, f"You have been added as submitter to project {project.name} by {request.user.get_full_name()}")
 
             msg = "Roles successfully assigned!"
     else:
@@ -120,14 +133,20 @@ def pm_project_managment(request):
 
             for project in projects:
                 if len(developers) + len(submitters) == 0 :
+                    for dev in project.assigned_users.filter(groups__name='developer'):
+                        create_notification(request, dev, f"You have been removed from project {project.name} by {request.user.get_full_name()}")
+                    for sub in project.assigned_users.filter(groups__name='submitter'):
+                        create_notification(request, sub, f"You have been removed from project {project.name} by {request.user.get_full_name()}")
                     project.clear_developers()
                     project.clear_submitters()
 
                 # assign users
                 for developer in developers:
                     project.assigned_users.add(developer)
+                    create_notification(request, developer, f"You have been added as a developer to project {project.name} by {request.user.get_full_name()}")
                 for submitter in submitters:
                     project.assigned_users.add(submitter)
+                    create_notification(request, submitter, f"You have been added as a submitter to project {project.name} by {request.user.get_full_name()}")
 
             msg = "Roles successfully assigned!"
     else:

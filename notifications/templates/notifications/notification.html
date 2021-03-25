@@ -1,5 +1,5 @@
 {% extends 'layouts/base.html' %}
-{% load crispy_forms_tags %}
+
 {% block title %} Profile {% endblock title %}
 {% block content %}
 
@@ -19,35 +19,30 @@
                 <div class="col">
                   <div class="row">
                     <div class="col">
-                      <h3 class="mb-0">Change Password</h3>
+                      <h3 class="mb-0">Notifications</h3>
                     </div>
                   </div>
                   
-                  {% if messages %}
-                  {% for message in messages%}
-                  <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-                    {{ message | safe }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  {% endfor %}
-                  {% endif %}
                 </div>
               </div>
             </div>
             <div class="card-body">
-              <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <h6 class="heading-small text-muted mb-4">Change User Password</h6>
-                {{ form|crispy }}
-                <div class="d-flex row justify-content-end mr-3">
-                  <div class="d-flex">
-                    <button class="btn btn-primary" type="submit">Change Password</button>
-                  </div>
+              {% if not notifications %}
+                <p>No unread notifications</p>
+              {% else %}
+              {% for notification in notifications %}
+                <div class="notification alert alert-primary">
+                  <a class="text-white" href="{% url 'notification' notification.id %}">{{ notification.message }}</a>
+                  <br><small>{{ notification.created_at|timesince }} ago </small>
                 </div>
-              </form>
+              {% endfor %}
+              {% endif %}
             </div>
+            {% if request.META.HTTP_REFERER == request.path %}
+            <a href="{{request.META.HTTP_REFERER}}" class='text-uppercase ml-4'><h6>Back</h6></a>
+            {% else %}
+            <a href="{% url 'dashboard' %}" class='text-uppercase ml-4'><h6>Back</h6></a>
+            {% endif %}
           </div>
         </div>
       </div>

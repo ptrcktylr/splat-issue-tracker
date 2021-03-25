@@ -18,6 +18,7 @@ from django.contrib import messages
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 @unauthenticated_user
 def login_view(request):
@@ -115,7 +116,8 @@ def add_users_to_group(request):
 
     return render(request, template, {"form" : form, "msg": msg, "users": User.objects.all()})
 
-class NewPasswordView(SuccessMessageMixin, PasswordChangeView):
+class NewPasswordView(SuccessMessageMixin, LoginRequiredMixin, PasswordChangeView):
+    login_url='/login/'
     form_class = PasswordChangeForm
     success_message = 'Password successfully changed!'
     success_url = '/profile/'

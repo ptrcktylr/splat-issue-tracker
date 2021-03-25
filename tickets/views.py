@@ -9,6 +9,7 @@ from .models import Ticket, Project
 from django.contrib.auth.models import User
 from .forms import TicketForm, TicketFormWithProject, AdminTicketForm
 from authentication.decorators import admin_user, project_manager_user, developer_user, submitter_user
+from notifications.utilities import create_notification
 
 @login_required(login_url='/login/')
 def ticket(request):
@@ -97,6 +98,12 @@ class TicketAdminUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView)
         return form
 
     def form_valid(self, form):
+        user = form.cleaned_data['assigned_to']
+        title = form.cleaned_data['title']
+
+        create_notification(self.request, self.object.history.first().assigned_to, f"You have been unassigned from the ticket {title} by {self.request.user.get_full_name()}")
+        create_notification(self.request, user, f"You have been assigned to the ticket {title} by {self.request.user.get_full_name()}")
+
         return super().form_valid(form)
 
     def test_func(self):

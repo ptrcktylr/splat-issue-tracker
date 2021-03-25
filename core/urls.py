@@ -14,7 +14,7 @@ urlpatterns = [
     # path("", include("app.urls")),             # UI Kits Html files
     path("", include("projects.urls")),
     path("", include("tickets.urls")),
-
+    path("notifications/", include('notifications.urls')),
 ]
 
 if settings.DEBUG:
