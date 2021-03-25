@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Ticket, Comment
+from .models import Attachment, Ticket, Comment
 from simple_history.admin import SimpleHistoryAdmin
 
 class TicketHistoryAdmin(SimpleHistoryAdmin):
@@ -9,3 +9,4 @@ class TicketHistoryAdmin(SimpleHistoryAdmin):
 
 admin.site.register(Ticket, TicketHistoryAdmin)
 admin.site.register(Comment)
+admin.site.register(Attachment)

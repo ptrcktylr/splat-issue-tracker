@@ -130,3 +130,16 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return reverse('ticket-detail', args=[str(self.ticket.id)])
+
+class Attachment(models.Model):
+    ticket = models.ForeignKey(Ticket, on_delete=CASCADE, related_name="attachments")
+    image = models.ImageField(upload_to='attachment_pics')
+    author = models.ForeignKey(User, on_delete=CASCADE)
+    note = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.image.name[16:]
+
+    def get_absolute_url(self):
+        return reverse('ticket-detail', args=[str(self.ticket.id)])

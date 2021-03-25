@@ -5,9 +5,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.edit import UpdateView
-from .models import Comment, Ticket, Project
+from .models import Attachment, Comment, Ticket, Project
 from django.contrib.auth.models import User
-from .forms import CommentForm, TicketForm, TicketFormWithProject, AdminTicketForm
+from .forms import AttachmentForm, CommentForm, TicketForm, TicketFormWithProject, AdminTicketForm
 from authentication.decorators import admin_user, project_manager_user, developer_user, submitter_user
 from notifications.utilities import create_notification
 
@@ -154,6 +154,20 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
     def get_form(self, *args, **kwargs):
         form = super(CommentCreateView, self).get_form(*args, **kwargs)
 
+        form.fields['ticket'].queryset = Ticket.objects.filter(id=self.kwargs['pk'])
+        return form
+    
+    def form_valid(self, form, *args, **kwargs):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+    
+class AttachmentCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/login/'
+    model = Attachment
+    form_class = AttachmentForm
+    
+    def get_form(self, *args, **kwargs):
+        form = super(AttachmentCreateView, self).get_form(*args, **kwargs)
         form.fields['ticket'].queryset = Ticket.objects.filter(id=self.kwargs['pk'])
         return form
     

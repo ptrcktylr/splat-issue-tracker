@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import fields, widgets
-from .models import Comment, Ticket
+from .models import Comment, Ticket, Attachment
 
 class TicketFormWithProject(forms.ModelForm):
     class Meta:
@@ -49,4 +49,15 @@ class CommentForm(forms.ModelForm):
         widget = {
             'ticket': forms.Select(attrs={'class':'form-control'}),
             'content':forms.Textarea(attrs={'class':'form-control'}),
+        }
+
+class AttachmentForm(forms.ModelForm):
+    class Meta:
+        model = Attachment
+        fields = ('ticket', 'image', 'note',)
+
+        widget = {
+            'ticket': forms.Select(attrs={'class':'form-control'}),
+            'image': forms.FileInput(attrs={'class':'form-control'}),
+            'note':forms.Textarea(attrs={'class':'form-control'}),
         }
