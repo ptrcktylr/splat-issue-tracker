@@ -127,3 +127,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
+
+    def get_absolute_url(self):
+        return reverse('ticket-detail', args=[str(self.ticket.id)])

@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import fields, widgets
-from .models import Ticket
+from .models import Comment, Ticket
 
 class TicketFormWithProject(forms.ModelForm):
     class Meta:
@@ -39,4 +39,14 @@ class AdminTicketForm(forms.ModelForm):
             'assigned_to': forms.Select(attrs={'class':'form-control'}),
             'type': forms.Select(attrs={'class':'form-control'}),
             'priority': forms.Select(attrs={'class':'form-control'}),
+        }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('ticket', 'content',)
+
+        widget = {
+            'ticket': forms.Select(attrs={'class':'form-control'}),
+            'content':forms.Textarea(attrs={'class':'form-control'}),
         }
