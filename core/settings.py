@@ -4,14 +4,9 @@ Copyright (c) 2019 - present AppSeed.us
 """
 
 import os
-import environ
 from decouple import config
 from unipath import Path
 import dj_database_url
-import django_on_heroku
-
-env = environ.Env()
-env.read_env(env.str('ENV_PATH', './.env'))
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).parent
@@ -24,7 +19,7 @@ SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
 DEBUG = config('DEBUG', default=True, cast=bool)
 
 # load production server from .env
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'splat-issue-tracker.herokuapp.com', config('SERVER', default='127.0.0.1')]
 
 # Application definition
 
@@ -149,13 +144,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = env('EMAIL_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_PASS')
-
-AWS_S3_REGION_NAME=env('AWS_S3_REGION_NAME')
-AWS_STORAGE_BUCKET_NAME=env('AWS_STORAGE_BUCKET_NAME')
-AWS_ACCESS_KEY_ID=env('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY=env('AWS_SECRET_ACCESS_KEY')
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = False
