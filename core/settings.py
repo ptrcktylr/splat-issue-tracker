@@ -95,6 +95,9 @@ DATABASES = {
     }
 }
 
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -162,6 +165,3 @@ MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
 MEDIA_URL='/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-# Configure Django App for Heroku.
-django_on_heroku.settings(locals())
