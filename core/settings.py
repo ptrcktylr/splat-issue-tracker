@@ -8,6 +8,7 @@ import environ
 from decouple import config
 from unipath import Path
 import dj_database_url
+import django_on_heroku
 
 env = environ.Env()
 env.read_env(env.str('ENV_PATH', './.env'))
@@ -161,3 +162,6 @@ MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
 MEDIA_URL='/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Configure Django App for Heroku.
+django_on_heroku.settings(locals())
