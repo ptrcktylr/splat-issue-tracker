@@ -19,14 +19,14 @@
                   <p>{{ msg | safe }}</p>
                 {% else %}
                   <p>
-                    <h2>Sign In</h2>
-                    or <a href={% url 'register' %} >create an account</a>
+                    <h2>Demo Sign In</h2>
+                    or <a href="{% url 'login' %}" >sign in with an existing account</a>
                   </p>
                 {% endif %}  
 
               </div>
 
-              <form method="POST">
+              <form method="POST" style="display: none;">
 
                 {% csrf_token %}
 
@@ -36,14 +36,6 @@
                       <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                     </div>
                     {{ form.username }}
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="input-group input-group-alternative">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                    </div>
-                    {{ form.password }}
                   </div>
                 </div>
                 <div class="custom-control custom-control-alternative custom-checkbox">
@@ -56,6 +48,15 @@
                   <button type="submit" class="btn btn-primary my-4">Sign in</button>
                 </div>
               </form>
+
+              <button onclick="SubmitDemo('demo_admin')" type="button" class="btn btn-primary">Admin</button>
+
+              <button onclick="SubmitDemo('demo_project_manager')" type="button" class="btn btn-primary">Project Manager</button>
+
+              <button onclick="SubmitDemo('demo_developer')" type="button" class="btn btn-primary">Developer</button>
+
+              <button onclick="SubmitDemo('demo_submitter')" type="button" class="btn btn-primary">Submitter</button>
+
             </div>
           </div>
           <div class="row mt-3">
@@ -70,6 +71,12 @@
       </div>
     </div>
 
+<script>
+    function SubmitDemo(username) {
+        $('#DemoEmail').val(username);
+        $('#frmDemo').submit();
+    }
+</script>
 {% endblock content %}
 
 <!-- Specific JS goes HERE --> 

@@ -25,6 +25,14 @@ class LoginForm(forms.Form):
             }
         ))
 
+class DemoLoginForm(forms.Form):
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder" : "Username",                
+                "class": "form-control"
+            }
+        ))
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(
         widget=forms.TextInput(

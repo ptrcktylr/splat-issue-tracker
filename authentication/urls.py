@@ -6,12 +6,13 @@ Copyright (c) 2019 - present AppSeed.us
 from re import template
 from django.contrib import auth
 from django.urls import path
-from .views import login_view, profile_view, register_user, add_users_to_group, NewPasswordView
+from .views import demo_login_view, login_view, profile_view, register_user, add_users_to_group, NewPasswordView
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('login/', login_view, name="login"),
+    path('demo-login/', demo_login_view, name="demo_login"),
     path('register/', register_user, name="register"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("password-reset/done/", 

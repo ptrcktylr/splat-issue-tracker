@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User, Group
 from django.forms.utils import ErrorList
 from django.http import HttpResponse
-from .forms import LoginForm, ProfileUpdateForm, SignUpForm, AddUsersToGroupForm, UpdateProfileForm, UserUpdateForm
+from .forms import DemoLoginForm, LoginForm, ProfileUpdateForm, SignUpForm, AddUsersToGroupForm, UpdateProfileForm, UserUpdateForm
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, admin_user
 from django.contrib import messages
@@ -41,6 +41,28 @@ def login_view(request):
             msg = 'Error validating the form'    
 
     return render(request, "accounts/login.html", {"form": form, "msg" : msg})
+
+@unauthenticated_user
+def demo_login_view(request):
+    form = DemoLoginForm(request.POST or None)
+
+    msg = None
+
+    if request.method == "POST":
+
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = 'pooping123'
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("/")
+            else:    
+                msg = 'Invalid credentials'    
+        else:
+            msg = 'Error validating the form'    
+
+    return render(request, "accounts/demo_login.html", {"form": form, "msg" : msg})
 
 @unauthenticated_user
 def register_user(request):
