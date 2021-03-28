@@ -1,5 +1,5 @@
 {% extends 'layouts/base.html' %}
-
+{% load group_tags %}
 {% block title %} {% if 'update' in request.path %} Update Project {% else %} New Project {% endif %} {% endblock title %}
 
 {% block content %}
@@ -16,7 +16,12 @@
                   <div class="row align-items-center">
                     <div class="col">
                       <h3 class="mb-2">{% if 'update' in request.path %} Update Project {% else %} New Project {% endif %}</h3>
-                      <h6 class="text-uppercase text-muted ls-1 mb-0">{% if 'update' not in request.path %} You will be added as a Project Manager {% else %} Updating existing project {% endif %}</h6>
+                      <h6 class="text-uppercase text-muted ls-1 mb-0">
+                        {% if 'update' not in request.path and request.user|has_group:"project manager" %} You will be added as a Project Manager
+                        {% elif 'update' not in request.path and request.user|has_group:"admin" %} You will be added as an Admin
+                        {% else %} Updating existing project
+                        {% endif %}
+                      </h6>
                     </div>
                   </div>
                 </div>
