@@ -101,11 +101,12 @@ class TicketAdminUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView)
         user = form.cleaned_data['assigned_to']
         title = form.cleaned_data['title']
 
-        try:
-            create_notification(self.request, self.object.history.first().assigned_to, f"You have been unassigned from the ticket {title} by {self.request.user.get_full_name()}")
-        except:
-            pass
-        create_notification(self.request, user, f"You have been assigned to the ticket {title} by {self.request.user.get_full_name()}")
+        if user != self.object.history.first().assigned_to:
+            try:
+                create_notification(self.request, self.object.history.first().assigned_to, f"You have been unassigned from the ticket {title} by {self.request.user.get_full_name()}")
+            except:
+                pass
+            create_notification(self.request, user, f"You have been assigned to the ticket {title} by {self.request.user.get_full_name()}")
 
         return super().form_valid(form)
 
