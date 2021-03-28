@@ -26,7 +26,7 @@
 
               </div>
 
-              <form method="POST" style="display: none;">
+              <form class="frmDemo" method="POST" style="display: none;">
 
                 {% csrf_token %}
 
@@ -73,7 +73,7 @@
 
 <script>
     function SubmitDemo(username) {
-        $('#DemoEmail').val(username);
+        $('#DemoUsername').val(username);
         $('#frmDemo').submit();
     }
 </script>
