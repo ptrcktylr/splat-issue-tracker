@@ -30,7 +30,8 @@ class DemoLoginForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 "placeholder" : "Username",                
-                "class": "form-control DemoUsername"
+                "class": "form-controld",
+                "id": "DemoUsername",
             }
         ))
 class SignUpForm(UserCreationForm):
