@@ -5,9 +5,11 @@ services:
     plan: free
     buildCommand: |
       pip install -r requirements.txt
+      python create_default_image.py
       python manage.py collectstatic --no-input
       python manage.py migrate --no-input
       python manage.py create_demo_users
+      python manage.py populate_sample_data
     startCommand: gunicorn --config gunicorn-cfg.py core.wsgi
     envVars:
       - key: SECRET_KEY
