@@ -7,6 +7,7 @@ services:
       pip install -r requirements.txt
       python manage.py collectstatic --no-input
       python manage.py migrate --no-input
+      python manage.py create_demo_users
     startCommand: gunicorn --config gunicorn-cfg.py core.wsgi
     envVars:
       - key: SECRET_KEY
