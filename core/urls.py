@@ -19,5 +19,5 @@ urlpatterns = [
     path("notifications/", include('notifications.urls')),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Serve media files in production (Render uses whitenoise for static, but not media)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
