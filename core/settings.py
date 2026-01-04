@@ -31,11 +31,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app',  # Enable the inner app 
+    'app',  # Enable the inner app
     'projects',
     'tickets',
     'simple_history',
     'crispy_forms',
+    'crispy_bootstrap4',
     'storages',
     'authentication',
     'notifications',
@@ -161,3 +162,12 @@ MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
 MEDIA_URL='/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Django 4.2 required settings
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CSRF trusted origins for Render
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.onrender.com',
+    'https://splat-issue-tracker.herokuapp.com'
+]
