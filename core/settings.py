@@ -19,7 +19,14 @@ SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
 DEBUG = config('DEBUG', default=True, cast=bool)
 
 # load production server from .env
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'splat-issue-tracker.herokuapp.com', config('SERVER', default='127.0.0.1')]
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'splat-issue-tracker.herokuapp.com',
+    'splat-issue-tracker.onrender.com',
+    '.onrender.com',  # Allow all Render subdomains
+    config('SERVER', default='127.0.0.1')
+]
 
 # Application definition
 
