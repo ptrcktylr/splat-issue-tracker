@@ -13,10 +13,10 @@ class Command(BaseCommand):
         submitter_group, _ = Group.objects.get_or_create(name='Submitter')
 
         demo_users = [
-            {'username': 'admin', 'email': 'admin@demo.com', 'first_name': 'Admin', 'last_name': 'User', 'group': admin_group, 'is_staff': True},
-            {'username': 'pm', 'email': 'pm@demo.com', 'first_name': 'Project', 'last_name': 'Manager', 'group': pm_group},
-            {'username': 'developer', 'email': 'dev@demo.com', 'first_name': 'Dev', 'last_name': 'User', 'group': dev_group},
-            {'username': 'submitter', 'email': 'submitter@demo.com', 'first_name': 'Submit', 'last_name': 'User', 'group': submitter_group},
+            {'username': 'demo_admin', 'email': 'admin@demo.com', 'first_name': 'Admin', 'last_name': 'User', 'group': admin_group, 'is_staff': True, 'is_superuser': True},
+            {'username': 'demo_project_manager', 'email': 'pm@demo.com', 'first_name': 'Project', 'last_name': 'Manager', 'group': pm_group},
+            {'username': 'demo_developer', 'email': 'dev@demo.com', 'first_name': 'Dev', 'last_name': 'User', 'group': dev_group},
+            {'username': 'demo_submitter', 'email': 'submitter@demo.com', 'first_name': 'Submit', 'last_name': 'User', 'group': submitter_group},
         ]
 
         password = 'pooping123'
@@ -37,6 +37,10 @@ class Command(BaseCommand):
 
             if user_data.get('is_staff'):
                 user.is_staff = True
+                user.save()
+
+            if user_data.get('is_superuser'):
+                user.is_superuser = True
                 user.save()
 
             user.groups.add(user_data['group'])
